@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { getDefaultWallets, RainbowKitProvider, connectorsForWallets, Theme
+} from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { arbitrum, goerli, mainnet, optimism, polygon } from 'wagmi/chains';
@@ -16,9 +17,12 @@ const { chains, provider, webSocketProvider } = configureChains(
   ],
   [publicProvider()]
 );
+const demoAppInfo = {
+  appName: 'Dadbro NFT',
+};
 
 const { connectors } = getDefaultWallets({
-  appName: 'RainbowKit App',
+  appName: 'Dadbro NFT',
   chains,
 });
 
@@ -29,10 +33,16 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
+const myCustomTheme: Theme = {
+  colors: {
+    modalBackground: '#c3c3c3',
+  },
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
+      <RainbowKitProvider chains={chains} appInfo={demoAppInfo} theme={myCustomTheme}>
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>

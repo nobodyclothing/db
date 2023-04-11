@@ -1,16 +1,141 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-image: url('/background1.png');
+ background-size: cover;
+
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: white
+}
+
+.mintWindows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.mintedCard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.titlebox {
+  color: white;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.linkRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.button {
+  appearance: none;
+  border: none;
+  background-image: linear-gradient(to right, #3898FF, #7A70FF);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  display: inline-flex;
+  line-height: 1;
+  font-size: 16px;
+  font-weight: 700;
+  height: 35px;
+  padding:24px;
+  /* border-radius: 9999px; */
+  align-items: center;
+  color: white;
+  transition: all ease 100ms;
+}
+
+button:not(:disabled):hover {
+  transform: scale(1.04)
+}
+
+button[data-mint-loading="true"] {
+  background: rgba(22, 25, 31, 0.24);
+}
+
+button[data-mint-started="true"] {
+  background-image: linear-gradient(270deg, #FF6257, #FF5CA0);
+  position: relative;
+}
+
+  button[data-mint-started="true"]::after {
+    animation-name: pulse;
+    animation-duration: 500ms;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    background-color: #FF6257;
+    border-radius: inherit;
+    bottom: 0;
+    content: ' ';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+button[data-mint-done="true"] {
+   opacity: 0;
+   transform: scale(0.85);
+}
+
+h1 { font-size: 24px; }
+h2 { font-size: 18px; }
+a { color: inherit }
+
+@keyframes pulse {
+  0% { opacity: 0 }
+  100% { opacity: '100%' }
 }
