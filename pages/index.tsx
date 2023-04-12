@@ -76,6 +76,28 @@ const Home: NextPage = () => {
 
   return (
     <div className="page" >
+      <Head>
+        <title>dadbro.</title>
+        <meta name="description" content="Dad, on the Blockchain."/>
+        <meta property="image" content="/dadvatarTrans.png"/>
+
+        {/*<!-- Facebook Meta Tags -->*/}
+        <meta property="og:url" content="https://www.dadbro.xyz/"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="dadbro."/>
+        <meta property="og:description" content="Dad, on the Blockchain"/>
+        <meta property="og:image" content="/dadvatarTrans.png"/>
+
+        {/*<!-- Twitter Meta Tags -->*/}
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta property="twitter:domain" content="dadbro."/>
+        <meta property="twitter:url" content="https://www.dadbro.xyz/"/>
+        <meta name="twitter:title" content="dadbro."/>
+        <meta name="twitter:description" content="https://www.dadbro.xyz/"/>
+        <meta name="twitter:image" content="/dadvatarTrans.png"/>
+
+      </Head>
+
 
       <div className="container">
 
