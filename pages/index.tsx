@@ -110,7 +110,7 @@ const Home: NextPage = () => {
                 alt="Dadbro NFT"
               />
               <h1 style={{ marginTop: 24 }}>dadbro.</h1>
-              <ConnectButton />
+              <ConnectButton/>
             </FrontCard>
 
             <BackCard isCardFlipped={isMinted}>
