@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
-
+  font-family: "Comic Sans MS", "Comic Sans", "Monaco", monospace;
 }
 
 body {
@@ -96,7 +95,7 @@ body {
   appearance: none;
   border: none;
   background-image: linear-gradient(to right, #3898FF, #7A70FF);
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-family: "Comic Sans MS", "Comic Sans", "Monaco", monospace;
   display: inline-flex;
   line-height: 1;
   font-size: 16px;
