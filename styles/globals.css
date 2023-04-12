@@ -1,9 +1,18 @@
 
+@font-face {
+  font-family: "Comic Sans MS";
+  src: local("Comic Sans MS"),
+    url("../public/ComicSansMS3.ttf") format("truetype");
+  font-weight: normal;
+}
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Comic Sans MS", "Comic Sans", "Marker Felt", "Monaco", monospace;
+  font-family: 'Comic Sans MS';
 }
 
 body {
@@ -78,6 +87,16 @@ body {
   padding: 12px
 }
 
+@media (max-width: 400px) {
+  .connect-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    width: 100%;
+  }
+}
+
 .links {
   display: flex;
   flex-direction: column;
@@ -107,6 +126,7 @@ body {
   align-items: center;
   color: white;
   transition: all ease 100ms;
+  font-family: "Comic Sans MS";
 }
 
 button:not(:disabled):hover {
