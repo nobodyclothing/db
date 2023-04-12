@@ -71,7 +71,10 @@ const myCustomTheme: Theme = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} appInfo={demoAppInfo} theme={myCustomTheme}>
+      <RainbowKitProvider
+      // theme={myCustomTheme}
+      chains={chains}
+      appInfo={demoAppInfo} >
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>
