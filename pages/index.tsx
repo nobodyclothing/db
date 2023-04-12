@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 import "98.css";
 import Image from 'next/image';
-import bg from '../public/background.png'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 
