@@ -1,8 +1,9 @@
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Comic Sans MS", "Comic Sans", "Monaco", monospace;
+  font-family: "Comic Sans MS", "Comic Sans", "Marker Felt", "Monaco", monospace;
 }
 
 body {
