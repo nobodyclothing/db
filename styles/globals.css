@@ -86,7 +86,7 @@ body {
   padding: 12px
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .page {
     min-height: 100vh;
     flex-direction: column;
