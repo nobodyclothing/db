@@ -63,7 +63,19 @@ body {
   text-align: right;
   display: flex;
   flex-direction: column;
+  align-items: center
+}
+
+.topbox {
+  color: white;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
   align-items: flex-end
+}
+
+.connect-line {
+  padding: 12px
 }
 
 .links {

@@ -193,9 +193,15 @@ const Home: NextPage = () => {
           <div>
 
             <div className='titlebox'>
-              <h1><b>dadbro.</b></h1>
-              <h2>Dad, on the Blockchain.</h2>
-              <ConnectButton />
+              <div className='topbox'>
+                <h1><b>dadbro.</b></h1>
+                <h2>Dad, on the Blockchain.</h2>
+              </div>
+
+              <div className="connect-line">
+                <ConnectButton />
+              </div>
+
             </div>
 
             {mintError && (
