@@ -243,7 +243,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                   <div className='window-body'>
-                  <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you're here, you're Family.</p>
+                  <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you&apos;re here, you&apos;re Family.</p>
                   <div className="field-row" style={{ justifyContent: "center" }}>
 
                   <button
