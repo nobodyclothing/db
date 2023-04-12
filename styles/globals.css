@@ -29,7 +29,6 @@ body {
   margin: 0 auto;
   background-image: url('/background1.png');
  background-size: cover;
-
 }
 
 .container {
@@ -88,13 +87,38 @@ body {
 }
 
 @media (max-width: 400px) {
+  .page {
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw
+  }
+  .container {
+    min-height: 100vh;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .imageContainer {
+    width: 100%;
+  }
+
   .connect-line {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: baseline;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
     width: 100%;
+    height: 100%;
     padding: 0px
+  }
+  .titlebox {
+    color: white;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    min-height: 100%;
   }
 }
 
