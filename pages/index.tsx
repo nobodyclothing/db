@@ -27,6 +27,8 @@ const Home: NextPage = () => {
   const [freeWlCount, setFreeWlCount] = useState(0);
   const [friendsWlCount, setFriendsWlCount] = useState(0);
   const [amount, setAmount] = useState(1);
+  const [amountFamily, setAmountFamily] = useState(1);
+  const [amountPublic, setAmountPublic] = useState(1);
   const [isMintLoading, setIsMintLoading] = useState(false);
   const [isMintSuccess, setIsMintSuccess] = useState(false);
   const [hash, setHash] = useState("");
@@ -83,7 +85,7 @@ const Home: NextPage = () => {
         const contract = ContractInstance(signer as ethers.Signer, chain.id);
         setIsMintLoading(true);
         const tx = await (
-          await contract.mint(amount, 3, proofPublic, 0, {
+          await contract.mint(amountPublic, 3, proofPublic, 0, {
             value: ethers.utils.parseEther(publicPrice)
           })
         ).wait();
@@ -118,7 +120,7 @@ const Home: NextPage = () => {
         setIsMintLoading(true);
         const proofFriends = getProofFriends((address as string).toLowerCase(), friendsWlCount);
         const tx = await (
-          await contract.mint(amount, 2, proofFriends, friendsWlCount, {
+          await contract.mint(amountFamily, 2, proofFriends, friendsWlCount, {
             value: ethers.utils.parseEther(friendsPrice)
           })
         ).wait();
@@ -166,17 +168,17 @@ const Home: NextPage = () => {
         setFriendsPrice("0");
         setPublicPrice("0");
         setTotalMinted("0");
-      } else if (amount > 0) {
+      } else if (amount > 0 || amountFamily > 0 || amountPublic > 0) {
         const provider = getProvider({
           chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET
         });
         const contract = ContractInstance(provider, chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET);
         // getting friends price
-        const price = await contract.getPriceInfo(2, amount);
+        const price = await contract.getPriceInfo(2, amountFamily);
         setFriendsPrice(ethers.utils.formatEther(price[1]).toString());
 
         // getting public price
-        const publicPrice = await contract.getPriceInfo(3, amount);
+        const publicPrice = await contract.getPriceInfo(3, amountPublic);
         setPublicPrice(ethers.utils.formatEther(publicPrice[1]).toString());
 
         // getting total supply
@@ -190,7 +192,7 @@ const Home: NextPage = () => {
         setTotalMinted("0");
       }
     })();
-  }, [signer, address, amount, refresh, chain]);
+  }, [signer, address, amount, amountPublic, amountFamily, refresh, chain]);
 
   return (
     <div className='page'>
@@ -257,6 +259,12 @@ const Home: NextPage = () => {
               <Image src='/opensea.png' width='20' height='20' alt='opensea' />
               <a target='_blank' href='https://www.opensea.io' rel='noopener noreferrer'>
                 <h4 style={{ paddingLeft: "10px" }}>Opensea</h4>
+              </a>
+            </div>
+            <div className='linkRow'>
+              <Image src='/twitter.png' width='20' height='20' alt='twitter' />
+              <a target='_blank' href='https://www.twitter.com/raddadbro' rel='noopener noreferrer'>
+                <h4 style={{ paddingLeft: "10px" }}>Twitter</h4>
               </a>
             </div>
             <div className='linkRow'>
@@ -345,8 +353,8 @@ const Home: NextPage = () => {
                     <div className='field-row' style={{ justifyContent: "space-between" }}>
                       <input
                         style={{ width: "80px" }}
-                        value={amount}
-                        onChange={(val) => setAmount(Number(val.target.value))}
+                        value={amountFamily}
+                        onChange={(val) => setAmountFamily(Number(val.target.value))}
                         max={5}
                         min={1}
                         type='number'
@@ -378,8 +386,8 @@ const Home: NextPage = () => {
                     <div className='field-row' style={{ justifyContent: "space-between" }}>
                       <input
                         style={{ width: "80px" }}
-                        value={amount}
-                        onChange={(val) => setAmount(Number(val.target.value))}
+                        value={amountPublic}
+                        onChange={(val) => setAmountPublic(Number(val.target.value))}
                         max={20}
                         min={1}
                         type='number'
