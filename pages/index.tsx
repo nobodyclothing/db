@@ -427,7 +427,7 @@ const Home: NextPage = () => {
                     onClick={() => mintFree(amount)}
                   >
                     {isMintLoading && 'Waiting for approval'}
-                    {'Minting...'}
+                    {isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Dadlist'}
                   </button>
                   </div>
@@ -457,7 +457,7 @@ const Home: NextPage = () => {
                     onClick={() => purchaseFriends(amount)}
                   >
                     {isMintLoading && 'Waiting for approval'}
-                    {'Minting...'}
+                    {isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Family'}
                   </button>
                   </div>
@@ -485,7 +485,7 @@ const Home: NextPage = () => {
                     onClick={() => purchasePublic(amount)}
                   >
                     {isMintLoading && 'Waiting for approval'}
-                    { 'Minting...'}
+                    { isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Public'}
                   </button>
                   </div>
