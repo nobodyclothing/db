@@ -170,9 +170,9 @@ const Home: NextPage = () => {
         setTotalMinted("0");
       } else if (amount > 0 || amountFamily > 0 || amountPublic > 0) {
         const provider = getProvider({
-          chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET
+          chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.ETHEREUM
         });
-        const contract = ContractInstance(provider, chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET);
+        const contract = ContractInstance(provider, chain ? chain.id : SUPPORT_CHAIN_IDS.ETHEREUM);
         // getting friends price
         const price = await contract.getPriceInfo(2, amountFamily);
         setFriendsPrice(ethers.utils.formatEther(price[1]).toString());
