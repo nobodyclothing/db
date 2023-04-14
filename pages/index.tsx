@@ -418,7 +418,7 @@ const Home: NextPage = () => {
 
                   </div>
                   <div className='window-body'>
-                    <p> you have {freeWlCount} free mints</p>
+                    <p> you have {freeWlCount} TOTAL free mints</p>
                   <p style={{ textAlign: "center", padding: '20px' }}>Free mints for Milady, Remilio, Radbro & Schizoposter Holders</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
                   <input onChange={(val) => setAmount(Number(val.target.value)) } type='number' max={4} value={amount}>
@@ -446,7 +446,7 @@ const Home: NextPage = () => {
 
                   </div>
                   <div className='window-body'>
-                  <p> you have {friendsWlCount} family mints</p>
+                  <p> you have {friendsWlCount} TOTAL family mints</p>
 
                   <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you&apos;re here, you&apos;re Family.</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
