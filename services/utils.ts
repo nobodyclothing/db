@@ -6,7 +6,7 @@ import DadBrosFreeWL from "../whitelist/DadBrosFreeWL.json";
 import DadBrosFriendsWL from "../whitelist/DadBrosFriendsWL.json";
 import { Logger } from "ethers/lib/utils";
 
-export const ContractInstance = (signer: ethers.Signer) => {
+export const ContractInstance = (signer: ethers.Signer | ethers.providers.Provider) => {
   return new ethers.Contract(DadBrosAdr, abi, signer);
 };
 

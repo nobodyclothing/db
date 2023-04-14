@@ -5,7 +5,8 @@ import Head from "next/head";
 import toast from "react-hot-toast";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useNetwork, useSigner } from "wagmi";
+import { getProvider } from '@wagmi/core'
 import "98.css";
 import FlipCard, { BackCard, FrontCard } from "../components/FlipCard";
 import {
@@ -16,6 +17,7 @@ import {
   getValidAmountFriends,
   ContractInstance
 } from "../services/utils";
+import {SUPPORT_CHAIN_IDS} from "../types/enums";
 
 const Home: NextPage = () => {
   // https://nextjs.org/docs/messages/react-hydration-error
@@ -35,16 +37,13 @@ const Home: NextPage = () => {
   const [refresh, setRefresh] = useState(false);
 
   const { data: signer } = useSigner();
+  const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
 
   /**
-   * ## Description
-   *
-   * The following code defines an async function `mintFree` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
-   *
-   * @param amount
+   * @description The following code defines an async function `mintFree` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
    */
-  const mintFree = async (amount: number) => {
+  const mintFree = async () => {
     if (freeWlCount === 0) {
       return toast.error("You are not on the whitelist");
     } else if (!signer) {
@@ -70,7 +69,11 @@ const Home: NextPage = () => {
     }
   };
 
-  const purchasePublic = async (amount: number) => {
+
+  /**
+   * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
+   */
+  const purchasePublic = async () => {
     const contract = ContractInstance(signer as ethers.Signer);
 
     const proofPublic = [ethers.utils.formatBytes32String("0")];
@@ -96,7 +99,10 @@ const Home: NextPage = () => {
     }
   };
 
-  const purchaseFriends = async (amount: number) => {
+  /**
+   * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
+   */
+  const purchaseFriends = async () => {
     const contract = ContractInstance(signer as ethers.Signer);
 
     if (friendsWlCount === 0) {
@@ -143,7 +149,7 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (signer) {
+    if (signer && address) {
       const wlFree = getValidAmountFree((address as string).toLowerCase());
       const wlFriends = getValidAmountFriends((address as string).toLowerCase());
       setFreeWlCount(wlFree);
@@ -153,9 +159,11 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     (async () => {
-      if (signer && address && amount > 0) {
-        const contract = ContractInstance(signer as ethers.Signer);
-
+      const provider = getProvider({
+        chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET,
+      });
+      const contract = ContractInstance(provider);
+      if (contract && amount > 0) {
         // getting friends price
         const price = await contract.getPriceInfo(2, amount);
         setFriendsPrice(ethers.utils.formatEther(price[1]).toString());
@@ -172,9 +180,10 @@ const Home: NextPage = () => {
       } else {
         setFriendsPrice("0");
         setPublicPrice("0");
+        setTotalMinted("0");
       }
     })();
-  }, [signer, address, amount, refresh]);
+  }, [signer, address, amount, refresh, chain]);
 
   return (
     <div className='page'>
@@ -300,7 +309,7 @@ const Home: NextPage = () => {
                         min={1}
                         value={amount}
                       />
-                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={() => mintFree(amount)}>
+                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={mintFree}>
                         {isMintLoading && "Approving and"}
                         {isMintLoading && "Minting..."}
                         {!isMintLoading && "Mint Dadlist"}
@@ -337,7 +346,7 @@ const Home: NextPage = () => {
                         type='number'
                       />
                       <p> Price: {friendsPrice.slice(0, 7)}</p>
-                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={() => purchaseFriends(amount)}>
+                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={purchaseFriends}>
                         {isMintLoading && "Approving and"}
                         {isMintLoading && "Minting..."}
                         {!isMintLoading && "Mint Family"}
@@ -370,7 +379,7 @@ const Home: NextPage = () => {
                         type='number'
                       />
                       <p> Price: {publicPrice.slice(0, 7)}</p>
-                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={() => purchasePublic(amount)}>
+                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={purchasePublic}>
                         {isMintLoading && "Approving and "}
                         {isMintLoading && "Minting..."}
                         {!isMintLoading && "Mint Public"}
