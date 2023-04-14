@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 
 
   const {data: signer, isError, isLoading} = useSigner();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
 
 
@@ -70,6 +70,7 @@ const Home: NextPage = () => {
     if (res) return res.count;
     return 0;
   };
+
   const getValidAmountFriends = (address: string): number => {
     const res = DadBrosFriendsWL.find((holder) => holder.address.toLowerCase() === address);
     if (res) return res.count;
@@ -226,11 +227,12 @@ const Home: NextPage = () => {
 
   React.useEffect(() => {
     
-    
-    const wlFree = getValidAmountFree((address as string).toLowerCase());
-    const wlFriends = getValidAmountFriends((address as string).toLowerCase());
-    setFreeWlCount(wlFree);
-    setFriendsWlCount(wlFriends);
+    if(signer){
+      const wlFree = getValidAmountFree((address as string).toLowerCase());
+      const wlFriends = getValidAmountFriends((address as string).toLowerCase());
+      setFreeWlCount(wlFree);
+      setFriendsWlCount(wlFriends);
+    }
   
     
 
@@ -404,7 +406,7 @@ const Home: NextPage = () => {
               </p>
             )}
 
-            {mounted && address && (
+            {mounted && isConnected && (
               <div className="mintWindows">
                 <div className='window' style={{marginTop: '10px', marginBottom: '10px', width: '100%', maxWidth: '400px'}}>
                   <div className="title-bar">
