@@ -313,16 +313,16 @@ const Home: NextPage = () => {
               <ConnectButton/>
             </FrontCard>
 
-            <BackCard isCardFlipped={isMintSuccess}>
+            <BackCard isCardFlipped={!isMintSuccess}>
               <div className="mintedCard">
                 <Image
                   src="/dadvatarTrans.png"
-                  width="100"
-                  height="100"
+                  width="90"
+                  height="90"
                   alt="dadbro NFT"
                   style={{ borderRadius: 8 }}
                 />
-                <h2 style={{ marginTop: 6, marginBottom: 6, color: 'green' }}>dad check.</h2>
+                <h3 style={{ marginTop: 6, marginBottom: 6, color: 'green' }}>dad check.</h3>
                 <p style={{ marginBottom: 24 }}>
                   Your dadbro will show up in your wallet in the next few minutes.
                 </p>
@@ -334,6 +334,9 @@ const Home: NextPage = () => {
                 </p>
                 <p>
                   View on{' '}
+                  <a href={`https://opensea.io/tx/${hash}`}>
+                    Opensea
+                  </a>
                 </p>
               </div>
             </BackCard>
