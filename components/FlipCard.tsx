@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 let AnimatedBox = motion.div;
 
@@ -35,8 +35,8 @@ export default function FlipCard({ children }: any) {
     >
       <AnimatedBox
         style={{
-          position: 'relative',
-          transformStyle: 'preserve-3d',
+          position: "relative",
+          transformStyle: "preserve-3d",
           width: 300,
           height: 300,
         }}
@@ -51,7 +51,7 @@ export function FrontCard({ isCardFlipped, children }: any) {
   return (
     <AnimatedCardFace
       variants={flipVariants}
-      animate={isCardFlipped ? 'frontFlipped' : 'shown'}
+      animate={isCardFlipped ? "frontFlipped" : "shown"}
     >
       {children}
     </AnimatedCardFace>
@@ -63,13 +63,13 @@ export function BackCard({ isCardFlipped, children }: any) {
     <AnimatedCardFace
       variants={flipVariants}
       initial={{ rotateY: 180 }}
-      animate={isCardFlipped ? 'shown' : 'backFlipped'}
+      animate={isCardFlipped ? "shown" : "backFlipped"}
       style={
         isCardFlipped
           ? {
-              backgroundColor: '#c3c3c3',
+              backgroundColor: "#c3c3c3",
               // backgroundImage: 'linear-gradient(-370deg, #3898FF, #7A70FF)',
-              color: 'black',
+              color: "black",
             }
           : {}
       }
@@ -83,29 +83,29 @@ function AnimatedCardFace({ children, style, ...rest }: any) {
   return (
     <AnimatedBox
       style={{
-        position: 'absolute',
-        backfaceVisibility: 'hidden',
-        height: '100%',
-        overflow: 'hidden',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
+        position: "absolute",
+        backfaceVisibility: "hidden",
+        height: "100%",
+        overflow: "hidden",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
         borderRadius: 12,
-        border: 'white 5px solid',
+        border: "white 5px solid",
         ...style,
       }}
       {...rest}
     >
       <div
         style={{
-          position: 'relative',
-          flexDirection: 'column',
+          position: "relative",
+          flexDirection: "column",
           flex: 1,
-          display: 'flex',
-          alignItems: 'flex-end',
+          display: "flex",
+          alignItems: "flex-end",
         }}
       >
-        <div style={{ flex: 1, width: '100%' }}>{children}</div>
+        <div style={{ flex: 1, width: "100%" }}>{children}</div>
       </div>
     </AnimatedBox>
   );
