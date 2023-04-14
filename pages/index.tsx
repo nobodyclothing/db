@@ -56,7 +56,7 @@ const Home: NextPage = () => {
       try {
         setIsMintLoading(true);
         const proofFree = getProofFree((address as string).toLowerCase(), freeWlCount);
-        const tx = await (await contract.mint(amount, 1, proofFree, friendsWlCount)).wait();
+        const tx = await (await contract.mint(amount, 1, proofFree, freeWlCount)).wait();
         const receipt = await signer?.provider?.getTransactionReceipt(tx.transactionHash);
         if (receipt?.status === 1) {
           setIsMintSuccess(true);
