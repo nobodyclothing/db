@@ -76,11 +76,11 @@ const Home: NextPage = () => {
     if (res) return res.count;
     return 0;
   };
-  
+
   const getCurrentPriceFriends = async(amount: number) => {
     const contract = OmniElementsContract(signer as ethers.Signer);
     const price = await contract.getPriceInfo(2, amount);
-    setFriendsPrice((ethers.utils.formatEther(price[1])).toString()); 
+    setFriendsPrice((ethers.utils.formatEther(price[1])).toString());
     return price[1].toString();
   }
   const getCurrentPricePublic = async(amount: number) => {
@@ -94,28 +94,28 @@ const Home: NextPage = () => {
 
   const getProofFree = (address: string, count: number): string[] => {
     let leaves;
-    
+
     leaves = DadBrosFreeWL.map((holder) =>
       keccak256(ethers.utils.solidityPack(["address", "uint256"], [holder.address, holder.count]))
     );
-  
+
     const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
     const leaf = keccak256(ethers.utils.solidityPack(["address", "uint256"], [address, count]));
     return tree.getHexProof(leaf);
-  
+
   };
 
   const getProofFriends = (address: string, count: number): string[] => {
     let leaves;
-    
+
     leaves = DadBrosFriendsWL.map((holder) =>
       keccak256(ethers.utils.solidityPack(["address", "uint256"], [holder.address, holder.count]))
     );
-  
+
     const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
     const leaf = keccak256(ethers.utils.solidityPack(["address", "uint256"], [address, count]));
     return tree.getHexProof(leaf);
-  
+
   };
 
 
@@ -145,7 +145,7 @@ const Home: NextPage = () => {
       }
       } catch (e) {
          alert((e as any).message)
-        
+
         setIsMintLoading(false);
       }
 
@@ -155,7 +155,7 @@ const Home: NextPage = () => {
 
   const purchasePublic = async(amount: number) => {
     const contract = OmniElementsContract(signer as ethers.Signer);
-    
+
     let price;
     price = await getCurrentPricePublic(amount);
     const proofPublic = [ethers.utils.formatBytes32String('0')]
@@ -175,8 +175,8 @@ const Home: NextPage = () => {
       alert((e as any).message)
       setIsMintLoading(false);
     }
-    
-  
+
+
   }
   const purchaseFriends = async(amount: number) => {
     const contract = OmniElementsContract(signer as ethers.Signer);
@@ -200,7 +200,7 @@ const Home: NextPage = () => {
           totalSupply()
           setIsMintSuccess(true);
           setHash(tx.transactionHash)
-          
+
         }
 
       } catch (e) {
@@ -228,18 +228,18 @@ const Home: NextPage = () => {
   }, []);
 
   React.useEffect(() => {
-    
+
     if(signer){
       const wlFree = getValidAmountFree((address as string).toLowerCase());
       const wlFriends = getValidAmountFriends((address as string).toLowerCase());
       setFreeWlCount(wlFree);
       setFriendsWlCount(wlFriends);
     }
-  
-    
 
-    
-  
+
+
+
+
   }, [signer, address]);
 
   const [totalMinted, setTotalMinted] = React.useState('0');
@@ -254,7 +254,7 @@ const Home: NextPage = () => {
     setTotalMinted(supply.toString());
     return supply.toString();
   }
-  
+
 
 
 
@@ -263,7 +263,7 @@ const Home: NextPage = () => {
       totalSupply();
       getCurrentPriceFriends(amount);
       getCurrentPricePublic(amount);
-  
+
     }
 
   }, [signer]);
@@ -415,13 +415,13 @@ const Home: NextPage = () => {
                     <div className="title-bar-text">
                       Mint Dadlist
                     </div>
- 
+
                   </div>
                   <div className='window-body'>
                     <p> you have {freeWlCount} free mints</p>
                   <p style={{ textAlign: "center", padding: '20px' }}>Free mints for Milady, Remilio, Radbro & Schizoposter Holders</p>
-                  <div className="field-row" style={{ justifyContent: "center" }}>
-                  <input onChange={(val) => setAmount(Number(val.target.value)) } type='number' max={4} value={amount}> 
+                  <div className="field-row" style={{ justifyContent: "space-between" }}>
+                  <input onChange={(val) => setAmount(Number(val.target.value)) } type='number' max={4} value={amount}>
                   </input>
                   <button
                     disabled={isMintLoading }
@@ -443,14 +443,14 @@ const Home: NextPage = () => {
 
                       Mint Family
                     </div>
-           
+
                   </div>
                   <div className='window-body'>
                   <p> you have {friendsWlCount} family mints</p>
 
                   <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you&apos;re here, you&apos;re Family.</p>
-                  <div className="field-row" style={{ justifyContent: "center" }}>
-                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) }  max={5} type='number'> 
+                  <div className="field-row" style={{ justifyContent: "space-between" }}>
+                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) }  max={5} type='number'>
                   </input>
                   <p> Price: {friendsPrice.slice(0,7)}</p>
                   <button
@@ -470,15 +470,15 @@ const Home: NextPage = () => {
                 <div className='window' style={{marginTop: '10px', marginBottom: '10px',  width: '100%', maxWidth: '400px'}}>
                   <div className="title-bar">
                     <div className="title-bar-text">
-                      
+
                       Mint Public
                     </div>
 
                   </div>
                   <div className='window-body'>
                   <p style={{ textAlign: "center", padding: '20px' }}>Buy in bulk to get the best deal.</p>
-                  <div className="field-row" style={{ justifyContent: "center" }}>
-                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) } type='number'> 
+                  <div className="field-row" style={{ justifyContent: "space-between" }}>
+                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) } type='number'>
                   </input>
                   <p> Price: {publicPrice.slice(0,7)}</p>
                   <button
