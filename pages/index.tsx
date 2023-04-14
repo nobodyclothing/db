@@ -322,12 +322,12 @@ const Home: NextPage = () => {
               <div className="mintedCard">
                 <Image
                   src="/dadvatarTrans.png"
-                  width="100"
-                  height="100"
+                  width="90"
+                  height="90"
                   alt="dadbro NFT"
                   style={{ borderRadius: 8 }}
                 />
-                <h2 style={{ marginTop: 6, marginBottom: 6, color: 'green' }}>dad check.</h2>
+                <h3 style={{ marginTop: 6, marginBottom: 6, color: 'green' }}>dad check.</h3>
                 <p style={{ marginBottom: 24 }}>
                   Your dadbro will show up in your wallet in the next few minutes.
                 </p>
@@ -339,6 +339,9 @@ const Home: NextPage = () => {
                 </p>
                 <p>
                   View on{' '}
+                  <a href={`https://opensea.io/tx/${hash}`}>
+                    Opensea
+                  </a>
                 </p>
               </div>
             </BackCard>
@@ -423,7 +426,7 @@ const Home: NextPage = () => {
 
                   </div>
                   <div className='window-body'>
-                    <p> you have {freeWlCount} free mints</p>
+                    <p> you have {freeWlCount} TOTAL free mints</p>
                   <p style={{ textAlign: "center", padding: '20px' }}>Free mints for Milady, Remilio, Radbro & Schizoposter Holders</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
                   <input style={{width: '80px'}} onChange={(val) => changedAmount(Number(val.target.value)) } type='number' max={4} min={1} value={amount}>
@@ -451,7 +454,7 @@ const Home: NextPage = () => {
 
                   </div>
                   <div className='window-body'>
-                  <p> you have {friendsWlCount} family mints</p>
+                  <p> you have {friendsWlCount} TOTAL family mints</p>
 
                   <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you&apos;re here, you&apos;re Family.</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
