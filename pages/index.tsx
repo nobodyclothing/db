@@ -257,7 +257,7 @@ const Home: NextPage = () => {
 
             <div className='linkRow'>
               <Image src='/opensea.png' width='20' height='20' alt='opensea' />
-              <a target='_blank' href='https://www.opensea.io' rel='noopener noreferrer'>
+              <a target='_blank' href='https://opensea.io/collection/dadbros' rel='noopener noreferrer'>
                 <h4 style={{ paddingLeft: "10px" }}>Opensea</h4>
               </a>
             </div>
