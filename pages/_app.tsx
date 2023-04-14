@@ -3,13 +3,13 @@ import "@rainbow-me/rainbowkit/styles.css";
 import {
   getDefaultWallets,
   RainbowKitProvider,
-  connectorsForWallets,
   lightTheme,
 } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { arbitrum, goerli, mainnet, optimism, polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { Toaster } from "react-hot-toast";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -52,6 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         appInfo={demoAppInfo}
       >
         <Component {...pageProps} />
+        <Toaster />
       </RainbowKitProvider>
     </WagmiConfig>
   );

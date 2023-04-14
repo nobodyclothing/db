@@ -1,13 +1,11 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
+import toast from "react-hot-toast";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
-import {
-  useAccount,
-  useSigner,
-} from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import "98.css";
 import FlipCard, { BackCard, FrontCard } from "../components/FlipCard";
 import {
@@ -33,55 +31,38 @@ const Home: NextPage = () => {
   const [publicPrice, setPublicPrice] = useState("");
   const [friendsPrice, setFriendsPrice] = useState("");
   const [totalMinted, setTotalMinted] = useState("0");
+  const [refresh, setRefresh] = useState(false);
 
-  const { data: signer, isError, isLoading } = useSigner();
+  const { data: signer } = useSigner();
   const { address, isConnected } = useAccount();
 
-  const getCurrentPriceFriends = async (amount: number) => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
-    const price = await contract.getPriceInfo(2, amount);
-    setFriendsPrice(ethers.utils.formatEther(price[1]).toString());
-    return price[1].toString();
-  };
-  const getCurrentPricePublic = async (amount: number) => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
-
-    const price = await contract.getPriceInfo(3, amount);
-    setPublicPrice(ethers.utils.formatEther(price[1]).toString());
-    return price[1].toString();
-  };
-
   const mintFree = async (amount: number) => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
-
-    let proofFree;
-
     if (freeWlCount === 0) {
-      alert("You are not on the whitelist");
-      return;
+      return toast.error("You are not on the whitelist");
+    } else if (!signer) {
+      return toast.error("Please connect your wallet");
     } else {
+      const contract = OmniElementsContract(signer as ethers.Signer);
       try {
         setIsMintLoading(true);
-        proofFree = getProofFree(
+        const proofFree = getProofFree(
           (address as string).toLowerCase(),
           freeWlCount
         );
         const tx = await (
           await contract.mint(amount, 1, proofFree, friendsWlCount)
         ).wait();
-        setIsMintLoading(false);
-        const reciept = await signer?.provider?.getTransactionReceipt(
+        const receipt = await signer?.provider?.getTransactionReceipt(
           tx.transactionHash
         );
-        if (reciept?.status === 1) {
+        if (receipt?.status === 1) {
           setIsMintSuccess(true);
-
           setHash(tx.transactionHash);
-          totalSupply();
+          setRefresh(!refresh);
         }
       } catch (e) {
         alert((e as any).message);
-
+      } finally {
         setIsMintLoading(false);
       }
     }
@@ -90,67 +71,64 @@ const Home: NextPage = () => {
   const purchasePublic = async (amount: number) => {
     const contract = OmniElementsContract(signer as ethers.Signer);
 
-    const price = await getCurrentPricePublic(amount);
     const proofPublic = [ethers.utils.formatBytes32String("0")];
     try {
       setIsMintLoading(true);
       const tx = await (
-        await contract.mint(amount, 3, proofPublic, 0, { value: price })
+        await contract.mint(amount, 3, proofPublic, 0, { value: ethers.utils.parseEther(publicPrice) })
       ).wait();
       setIsMintLoading(false);
-      const reciept = await signer?.provider?.getTransactionReceipt(
+      const receipt = await signer?.provider?.getTransactionReceipt(
         tx.transactionHash
       );
-      if (reciept?.status === 1) {
-        getCurrentPricePublic(amount);
-        totalSupply();
+      if (receipt?.status === 1) {
         setIsMintSuccess(true);
         setHash(tx.transactionHash);
+        setRefresh(!refresh)
       }
     } catch (e) {
       alert((e as any).message);
+    } finally {
       setIsMintLoading(false);
     }
   };
+
   const purchaseFriends = async (amount: number) => {
     const contract = OmniElementsContract(signer as ethers.Signer);
 
-    let proofFriends;
-    let price;
-
     if (friendsWlCount === 0) {
-      alert("You are not on the whitelist");
-      return;
+      return toast.error("You are not on the whitelist");
+    } else if (!signer) {
+      return toast.error("Please connect your wallet");
     } else {
       try {
         setIsMintLoading(true);
-        proofFriends = getProofFriends(
+        const proofFriends = getProofFriends(
           (address as string).toLowerCase(),
           friendsWlCount
         );
-        price = await getCurrentPriceFriends(amount);
         const tx = await (
           await contract.mint(amount, 2, proofFriends, friendsWlCount, {
-            value: price,
+            value: ethers.utils.parseEther(friendsPrice),
           })
         ).wait();
         setIsMintLoading(false);
-        const reciept = await signer?.provider?.getTransactionReceipt(
+        const receipt = await signer?.provider?.getTransactionReceipt(
           tx.transactionHash
         );
-        if (reciept?.status === 1) {
-          getCurrentPriceFriends(amount);
-          totalSupply();
+        if (receipt?.status === 1) {
+          setRefresh(!refresh);
           setIsMintSuccess(true);
           setHash(tx.transactionHash);
         }
       } catch (e) {
         alert((e as any).message);
-
+      } finally {
         setIsMintLoading(false);
       }
     }
   };
+
   useEffect(() => {
     // Define a function that updates the data
 
@@ -158,11 +136,11 @@ const Home: NextPage = () => {
 
     // Call the function every 10 minutes
     const interval = setInterval(() => {
-      getCurrentPriceFriends(amount);
-      getCurrentPricePublic(amount);
+      setRefresh(!refresh)
     }, 600000);
 
     // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -176,29 +154,30 @@ const Home: NextPage = () => {
     }
   }, [signer, address]);
 
-  const totalSupply = async () => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
-    const freeSupply = await contract.freeSupply();
-    const friendsSupply = await contract.friendsAndPublicSupply();
-    const supply = freeSupply + friendsSupply;
-    setTotalMinted(supply.toString());
-    return supply.toString();
-  };
-
-  const changedAmount = (newAmount: number) => {
-    console.log(newAmount);
-    setAmount(newAmount);
-    getCurrentPriceFriends(newAmount);
-    getCurrentPricePublic(newAmount);
-  };
-
   useEffect(() => {
-    if (signer) {
-      totalSupply();
-      getCurrentPriceFriends(amount);
-      getCurrentPricePublic(amount);
-    }
-  }, [signer]);
+    (async () => {
+      if (signer && address && amount > 0) {
+        const contract = OmniElementsContract(signer as ethers.Signer);
+
+        // getting friends price
+        const price = await contract.getPriceInfo(2, amount);
+        setFriendsPrice(ethers.utils.formatEther(price[1]).toString());
+
+        // getting public price
+        const publicPrice = await contract.getPriceInfo(3, amount);
+        setPublicPrice(ethers.utils.formatEther(publicPrice[1]).toString());
+
+        // getting total supply
+        const freeSupply = await contract.freeSupply();
+        const friendsSupply = await contract.friendsAndPublicSupply();
+        const supply = freeSupply + friendsSupply;
+        setTotalMinted(supply.toString());
+      } else {
+        setFriendsPrice("0")
+        setPublicPrice("0")
+      }
+    })()
+  }, [signer, address, amount, refresh]);
 
   return (
     <div className="page">
@@ -355,13 +334,13 @@ const Home: NextPage = () => {
                       <input
                         style={{ width: "80px" }}
                         onChange={(val) =>
-                          changedAmount(Number(val.target.value))
+                          setAmount(Number(val.target.value))
                         }
                         type="number"
                         max={4}
                         min={1}
                         value={amount}
-                      ></input>
+                      />
                       <button
                         disabled={isMintLoading}
                         data-mint-loading={isMintLoading}
@@ -402,12 +381,12 @@ const Home: NextPage = () => {
                         style={{ width: "80px" }}
                         value={amount}
                         onChange={(val) =>
-                          changedAmount(Number(val.target.value))
+                          setAmount(Number(val.target.value))
                         }
                         max={5}
                         min={1}
                         type="number"
-                      ></input>
+                      />
                       <p> Price: {friendsPrice.slice(0, 7)}</p>
                       <button
                         disabled={isMintLoading}
@@ -446,12 +425,12 @@ const Home: NextPage = () => {
                         style={{ width: "80px" }}
                         value={amount}
                         onChange={(val) =>
-                          changedAmount(Number(val.target.value))
+                          setAmount(Number(val.target.value))
                         }
                         max={20}
                         min={1}
                         type="number"
-                      ></input>
+                      />
                       <p> Price: {publicPrice.slice(0, 7)}</p>
                       <button
                         disabled={isMintLoading}
