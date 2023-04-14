@@ -14,7 +14,7 @@ import {
   getProofFriends,
   getValidAmountFree,
   getValidAmountFriends,
-  OmniElementsContract
+  ContractInstance
 } from "../services/utils";
 
 const Home: NextPage = () => {
@@ -37,13 +37,20 @@ const Home: NextPage = () => {
   const { data: signer } = useSigner();
   const { address, isConnected } = useAccount();
 
+  /**
+   * ## Description
+   *
+   * The following code defines an async function `mintFree` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
+   *
+   * @param amount
+   */
   const mintFree = async (amount: number) => {
     if (freeWlCount === 0) {
       return toast.error("You are not on the whitelist");
     } else if (!signer) {
       return toast.error("Please connect your wallet");
     } else {
-      const contract = OmniElementsContract(signer as ethers.Signer);
+      const contract = ContractInstance(signer as ethers.Signer);
       try {
         setIsMintLoading(true);
         const proofFree = getProofFree((address as string).toLowerCase(), freeWlCount);
@@ -64,7 +71,7 @@ const Home: NextPage = () => {
   };
 
   const purchasePublic = async (amount: number) => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
+    const contract = ContractInstance(signer as ethers.Signer);
 
     const proofPublic = [ethers.utils.formatBytes32String("0")];
     try {
@@ -90,7 +97,7 @@ const Home: NextPage = () => {
   };
 
   const purchaseFriends = async (amount: number) => {
-    const contract = OmniElementsContract(signer as ethers.Signer);
+    const contract = ContractInstance(signer as ethers.Signer);
 
     if (friendsWlCount === 0) {
       return toast.error("You are not on the whitelist");
@@ -147,7 +154,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     (async () => {
       if (signer && address && amount > 0) {
-        const contract = OmniElementsContract(signer as ethers.Signer);
+        const contract = ContractInstance(signer as ethers.Signer);
 
         // getting friends price
         const price = await contract.getPriceInfo(2, amount);
