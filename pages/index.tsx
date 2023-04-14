@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from "ethers";
 import { useAccount, useNetwork, useSigner } from "wagmi";
-import { getProvider } from '@wagmi/core'
+import { getProvider } from "@wagmi/core";
 import "98.css";
 import FlipCard, { BackCard, FrontCard } from "../components/FlipCard";
 import {
@@ -17,7 +17,7 @@ import {
   getValidAmountFriends,
   ContractInstance
 } from "../services/utils";
-import {SUPPORT_CHAIN_IDS} from "../types/enums";
+import { SUPPORT_CHAIN_IDS } from "../types/enums";
 
 const Home: NextPage = () => {
   // https://nextjs.org/docs/messages/react-hydration-error
@@ -66,7 +66,6 @@ const Home: NextPage = () => {
       }
     }
   };
-
 
   /**
    * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
@@ -156,7 +155,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     (async () => {
       const provider = getProvider({
-        chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET,
+        chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET
       });
       const contract = ContractInstance(provider);
       if (contract && amount > 0) {
