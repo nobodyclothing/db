@@ -301,7 +301,7 @@ const Home: NextPage = () => {
 
       <div className="imageContainer">
           <FlipCard>
-            <FrontCard isCardFlipped={isMintSuccess}>
+            <FrontCard isCardFlipped={isMintSuccess && !isMintLoading}>
               <Image
                 layout="responsive"
                 src="/dadGif.gif"
@@ -313,7 +313,7 @@ const Home: NextPage = () => {
               <ConnectButton/>
             </FrontCard>
 
-            <BackCard isCardFlipped={isMintSuccess}>
+            <BackCard isCardFlipped={isMintSuccess && !isMintLoading}>
               <div className="mintedCard">
                 <Image
                   src="/dadvatarTrans.png"
@@ -428,7 +428,7 @@ const Home: NextPage = () => {
                     data-mint-loading={isMintLoading}
                     onClick={() => mintFree(amount)}
                   >
-                    {isMintLoading && 'Waiting for approval'}
+                    {isMintLoading && 'Approving and'}
                     {isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Dadlist'}
                   </button>
@@ -458,7 +458,7 @@ const Home: NextPage = () => {
                     data-mint-loading={isMintLoading}
                     onClick={() => purchaseFriends(amount)}
                   >
-                    {isMintLoading && 'Waiting for approval'}
+                    {isMintLoading && 'Approving and'}
                     {isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Family'}
                   </button>
@@ -486,7 +486,7 @@ const Home: NextPage = () => {
                     data-mint-loading={isMintLoading}
                     onClick={() => purchasePublic(amount)}
                   >
-                    {isMintLoading && 'Waiting for approval'}
+                    {isMintLoading && 'Approving and '}
                     { isMintLoading && 'Minting...'}
                     {!isMintLoading && 'Mint Public'}
                   </button>
