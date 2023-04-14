@@ -255,7 +255,12 @@ const Home: NextPage = () => {
     return supply.toString();
   }
 
-
+  const changedAmount = (newAmount: number) => {
+    console.log(newAmount)
+    setAmount(newAmount);
+    getCurrentPriceFriends(newAmount);
+    getCurrentPricePublic(newAmount);
+  }
 
 
   React.useEffect(() => {
@@ -421,7 +426,7 @@ const Home: NextPage = () => {
                     <p> you have {freeWlCount} free mints</p>
                   <p style={{ textAlign: "center", padding: '20px' }}>Free mints for Milady, Remilio, Radbro & Schizoposter Holders</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
-                  <input onChange={(val) => setAmount(Number(val.target.value)) } type='number' max={4} value={amount}>
+                  <input style={{width: '80px'}} onChange={(val) => changedAmount(Number(val.target.value)) } type='number' max={4} min={1} value={amount}>
                   </input>
                   <button
                     disabled={isMintLoading }
@@ -450,7 +455,7 @@ const Home: NextPage = () => {
 
                   <p style={{ textAlign: "center", padding: '20px' }}>Discounted mints for friends. when you&apos;re here, you&apos;re Family.</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
-                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) }  max={5} type='number'>
+                  <input  style={{width: '80px'}} value={amount} onChange={(val) => changedAmount(Number(val.target.value)) }  max={5} min={1} type='number'>
                   </input>
                   <p> Price: {friendsPrice.slice(0,7)}</p>
                   <button
@@ -478,7 +483,7 @@ const Home: NextPage = () => {
                   <div className='window-body'>
                   <p style={{ textAlign: "center", padding: '20px' }}>Buy in bulk to get the best deal.</p>
                   <div className="field-row" style={{ justifyContent: "space-between" }}>
-                  <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) } type='number'>
+                  <input style={{width: '80px'}} value={amount} onChange={(val) => changedAmount(Number(val.target.value)) } max={20} min={1} type='number'>
                   </input>
                   <p> Price: {publicPrice.slice(0,7)}</p>
                   <button
