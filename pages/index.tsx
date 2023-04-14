@@ -250,7 +250,7 @@ const Home: NextPage = () => {
           <div className='links'>
             <div className='linkRow'>
               <Image src='/etherscan.png' width='20' height='20' alt='etherscan' />
-              <a target='_blank' href='https://etherscan.io/address/0x3519aA6d926720a31953fD9bfa571c36F38e58F4' rel='noopener noreferrer'>
+              <a target='_blank' href='https://etherscan.io/address/0x78F3C6c28b6D70982f98678F5e09c3731c963152' rel='noopener noreferrer'>
                 <h4 style={{ paddingLeft: "10px" }}>Etherscan</h4>
               </a>
             </div>
