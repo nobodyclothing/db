@@ -1,10 +1,6 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import {
-  getDefaultWallets,
-  RainbowKitProvider,
-  lightTheme,
-} from "@rainbow-me/rainbowkit";
+import { getDefaultWallets, RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { arbitrum, goerli, mainnet, optimism, polygon } from "wagmi/chains";
@@ -12,29 +8,23 @@ import { publicProvider } from "wagmi/providers/public";
 import { Toaster } from "react-hot-toast";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
-  ],
+  [mainnet, polygon, optimism, arbitrum, ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : [])],
   [publicProvider()]
 );
 const demoAppInfo = {
-  appName: "Dadbro NFT",
+  appName: "Dadbro NFT"
 };
 
 const { connectors } = getDefaultWallets({
   appName: "Dadbro NFT",
-  chains,
+  chains
 });
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
-  webSocketProvider,
+  webSocketProvider
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -46,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           accentColorForeground: "black",
           borderRadius: "small",
           fontStack: "system",
-          overlayBlur: "small",
+          overlayBlur: "small"
         })}
         chains={chains}
         appInfo={demoAppInfo}

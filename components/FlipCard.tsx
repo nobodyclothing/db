@@ -9,28 +9,28 @@ const flipVariants = {
   shown: {
     rotateY: 0,
     transition: {
-      duration,
-    },
+      duration
+    }
   },
   frontFlipped: {
     rotateY: -180,
     transition: {
-      duration,
-    },
+      duration
+    }
   },
   backFlipped: {
     rotateY: 180,
     transition: {
-      duration,
-    },
-  },
+      duration
+    }
+  }
 };
 
 export default function FlipCard({ children }: any) {
   return (
     <AnimatedBox
       style={{
-        perspective: 1000,
+        perspective: 1000
       }}
     >
       <AnimatedBox
@@ -38,7 +38,7 @@ export default function FlipCard({ children }: any) {
           position: "relative",
           transformStyle: "preserve-3d",
           width: 300,
-          height: 300,
+          height: 300
         }}
       >
         {children}
@@ -49,10 +49,7 @@ export default function FlipCard({ children }: any) {
 
 export function FrontCard({ isCardFlipped, children }: any) {
   return (
-    <AnimatedCardFace
-      variants={flipVariants}
-      animate={isCardFlipped ? "frontFlipped" : "shown"}
-    >
+    <AnimatedCardFace variants={flipVariants} animate={isCardFlipped ? "frontFlipped" : "shown"}>
       {children}
     </AnimatedCardFace>
   );
@@ -69,7 +66,7 @@ export function BackCard({ isCardFlipped, children }: any) {
           ? {
               backgroundColor: "#c3c3c3",
               // backgroundImage: 'linear-gradient(-370deg, #3898FF, #7A70FF)',
-              color: "black",
+              color: "black"
             }
           : {}
       }
@@ -92,7 +89,7 @@ function AnimatedCardFace({ children, style, ...rest }: any) {
         flexDirection: "column",
         borderRadius: 12,
         border: "white 5px solid",
-        ...style,
+        ...style
       }}
       {...rest}
     >
@@ -102,7 +99,7 @@ function AnimatedCardFace({ children, style, ...rest }: any) {
           flexDirection: "column",
           flex: 1,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "flex-end"
         }}
       >
         <div style={{ flex: 1, width: "100%" }}>{children}</div>
