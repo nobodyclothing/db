@@ -144,7 +144,8 @@ const Home: NextPage = () => {
 
       }
       } catch (e) {
-      
+         alert((e as any).message)
+        
         setIsMintLoading(false);
       }
 
@@ -171,7 +172,7 @@ const Home: NextPage = () => {
 
       }
     } catch (e) {
-    
+      alert((e as any).message)
       setIsMintLoading(false);
     }
     
@@ -203,6 +204,7 @@ const Home: NextPage = () => {
         }
 
       } catch (e) {
+        alert((e as any).message)
 
         setIsMintLoading(false);
       }
@@ -450,7 +452,7 @@ const Home: NextPage = () => {
                   <div className="field-row" style={{ justifyContent: "center" }}>
                   <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) }  max={5} type='number'> 
                   </input>
-                  <p> Price: {friendsPrice}</p>
+                  <p> Price: {friendsPrice.slice(0,7)}</p>
                   <button
                     disabled={ isMintLoading }
                     data-mint-loading={isMintLoading}
@@ -478,7 +480,7 @@ const Home: NextPage = () => {
                   <div className="field-row" style={{ justifyContent: "center" }}>
                   <input value={amount} onChange={(val) => setAmount(Number(val.target.value)) } type='number'> 
                   </input>
-                  <p> Price: {publicPrice}</p>
+                  <p> Price: {publicPrice.slice(0,7)}</p>
                   <button
                     disabled={isMintLoading}
                     data-mint-loading={isMintLoading}
