@@ -30,7 +30,6 @@ const Home: NextPage = () => {
   const [isMintLoading, setIsMintLoading] = useState(false);
   const [isMintSuccess, setIsMintSuccess] = useState(false);
   const [hash, setHash] = useState("");
-  const [error, setError] = useState("");
   const [publicPrice, setPublicPrice] = useState("");
   const [friendsPrice, setFriendsPrice] = useState("");
   const [totalMinted, setTotalMinted] = useState("0");
@@ -61,7 +60,6 @@ const Home: NextPage = () => {
           setRefresh(!refresh);
         }
       } catch (e) {
-        setError(getErrorMessage(e));
         toast.error(getErrorMessage(e));
       } finally {
         setIsMintLoading(false);
@@ -92,7 +90,6 @@ const Home: NextPage = () => {
         setRefresh(!refresh);
       }
     } catch (e) {
-      setError(getErrorMessage(e));
       toast.error(getErrorMessage(e));
     } finally {
       setIsMintLoading(false);
@@ -126,7 +123,6 @@ const Home: NextPage = () => {
           setHash(tx.transactionHash);
         }
       } catch (e) {
-        setError(getErrorMessage(e));
         toast.error(getErrorMessage(e));
       } finally {
         setIsMintLoading(false);
@@ -280,8 +276,7 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            {error && <p style={{ marginTop: 24, color: "#FF6257" }}>Error: {error}</p>}
-            {error && <p style={{ marginTop: 24, color: "#FF6257" }}>Error: {error}</p>}
+            {/*{error && <p style={{ marginTop: 24, color: "#FF6257" }}>Error: {error}</p>}*/}
 
             {mounted && isConnected && (
               <div className='mintWindows'>
