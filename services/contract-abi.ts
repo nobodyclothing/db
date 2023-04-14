@@ -1,3 +1,5 @@
+import { SUPPORT_CHAIN_IDS } from "../types/enums";
+
 export const abi = [
   {
     inputs: [
@@ -1957,4 +1959,7 @@ export const abi = [
   }
 ] as const;
 
-export const DadBrosAdr = "0x0cfc7829a076F05434e8D4f0c1dED2656BFCfEb1";
+export const Addresses: { [key: string]: string } = {
+  [SUPPORT_CHAIN_IDS.ETHEREUM]: "0x0cfc7829a076F05434e8D4f0c1dED2656BFCfEb1",
+  [SUPPORT_CHAIN_IDS.GOERLI_TESTNET]: "0x0cfc7829a076F05434e8D4f0c1dED2656BFCfEb1"
+};

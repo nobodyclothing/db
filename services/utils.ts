@@ -1,13 +1,13 @@
 import { ethers } from "ethers";
 import keccak256 from "keccak256";
 import { MerkleTree } from "merkletreejs";
-import { abi, DadBrosAdr } from "../contract-abi";
+import { Logger } from "ethers/lib/utils";
+import { abi, Addresses } from "./contract-abi";
 import DadBrosFreeWL from "../whitelist/DadBrosFreeWL.json";
 import DadBrosFriendsWL from "../whitelist/DadBrosFriendsWL.json";
-import { Logger } from "ethers/lib/utils";
 
-export const ContractInstance = (signer: ethers.Signer | ethers.providers.Provider) => {
-  return new ethers.Contract(DadBrosAdr, abi, signer);
+export const ContractInstance = (signer: ethers.Signer | ethers.providers.Provider, chainId: number) => {
+  return new ethers.Contract(Addresses[chainId.toString()], abi, signer);
 };
 
 export const getValidAmountFree = (address: string): number => {

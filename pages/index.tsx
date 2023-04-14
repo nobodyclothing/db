@@ -47,8 +47,10 @@ const Home: NextPage = () => {
       return toast.error("You are not on the whitelist");
     } else if (!signer) {
       return toast.error("Please connect your wallet");
+    } else if (!chain) {
+      return toast.error("You are connected to an unsupported network");
     } else {
-      const contract = ContractInstance(signer as ethers.Signer);
+      const contract = ContractInstance(signer as ethers.Signer, chain.id);
       try {
         setIsMintLoading(true);
         const proofFree = getProofFree((address as string).toLowerCase(), freeWlCount);
@@ -71,27 +73,32 @@ const Home: NextPage = () => {
    * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
    */
   const purchasePublic = async () => {
-    const contract = ContractInstance(signer as ethers.Signer);
-
-    const proofPublic = [ethers.utils.formatBytes32String("0")];
-    try {
-      setIsMintLoading(true);
-      const tx = await (
-        await contract.mint(amount, 3, proofPublic, 0, {
-          value: ethers.utils.parseEther(publicPrice)
-        })
-      ).wait();
-      setIsMintLoading(false);
-      const receipt = await signer?.provider?.getTransactionReceipt(tx.transactionHash);
-      if (receipt?.status === 1) {
-        setIsMintSuccess(true);
-        setHash(tx.transactionHash);
-        setRefresh(!refresh);
+    if (!signer) {
+      return toast.error("Please connect your wallet");
+    } else if (!chain) {
+      return toast.error("You are connected to an unsupported network");
+    } else {
+      const proofPublic = [ethers.utils.formatBytes32String("0")];
+      try {
+        const contract = ContractInstance(signer as ethers.Signer, chain.id);
+        setIsMintLoading(true);
+        const tx = await (
+          await contract.mint(amount, 3, proofPublic, 0, {
+            value: ethers.utils.parseEther(publicPrice)
+          })
+        ).wait();
+        setIsMintLoading(false);
+        const receipt = await signer?.provider?.getTransactionReceipt(tx.transactionHash);
+        if (receipt?.status === 1) {
+          setIsMintSuccess(true);
+          setHash(tx.transactionHash);
+          setRefresh(!refresh);
+        }
+      } catch (e) {
+        toast.error(getErrorMessage(e));
+      } finally {
+        setIsMintLoading(false);
       }
-    } catch (e) {
-      toast.error(getErrorMessage(e));
-    } finally {
-      setIsMintLoading(false);
     }
   };
 
@@ -99,14 +106,15 @@ const Home: NextPage = () => {
    * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
    */
   const purchaseFriends = async () => {
-    const contract = ContractInstance(signer as ethers.Signer);
-
     if (friendsWlCount === 0) {
       return toast.error("You are not on the whitelist");
     } else if (!signer) {
       return toast.error("Please connect your wallet");
+    } else if (!chain) {
+      return toast.error("You are connected to an unsupported network");
     } else {
       try {
+        const contract = ContractInstance(signer as ethers.Signer, chain.id);
         setIsMintLoading(true);
         const proofFriends = getProofFriends((address as string).toLowerCase(), friendsWlCount);
         const tx = await (
@@ -154,11 +162,15 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     (async () => {
-      const provider = getProvider({
-        chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET
-      });
-      const contract = ContractInstance(provider);
-      if (contract && amount > 0) {
+      if (chain && chain.unsupported) {
+        setFriendsPrice("0");
+        setPublicPrice("0");
+        setTotalMinted("0");
+      } else if (amount > 0) {
+        const provider = getProvider({
+          chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET
+        });
+        const contract = ContractInstance(provider, chain ? chain.id : SUPPORT_CHAIN_IDS.GOERLI_TESTNET);
         // getting friends price
         const price = await contract.getPriceInfo(2, amount);
         setFriendsPrice(ethers.utils.formatEther(price[1]).toString());

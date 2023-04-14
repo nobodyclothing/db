@@ -1,8 +1,5 @@
 export enum SUPPORT_CHAIN_IDS {
   ETHEREUM = 1,
-  POLYGON = 137,
-  OPTIMISM = 10,
-  ARBITRUM = 42161,
 
   GOERLI_TESTNET = 5
 }
