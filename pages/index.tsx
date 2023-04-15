@@ -246,7 +246,7 @@ const Home: NextPage = () => {
               </div>
             </BackCard>
           </FlipCard>
-          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted} Dads minted.</h3>
+          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted}/3000 Dads minted.</h3>
           <div className='links'>
             <div className='linkRow'>
               <Image src='/etherscan.png' width='20' height='20' alt='etherscan' />
