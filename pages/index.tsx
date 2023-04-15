@@ -322,6 +322,7 @@ const Home: NextPage = () => {
                         max={4}
                         min={1}
                         value={amount}
+                        readOnly
                       />
                       <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={mintFree}>
                         {isMintLoading && "Approving and"}
