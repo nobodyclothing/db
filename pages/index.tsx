@@ -309,7 +309,7 @@ const Home: NextPage = () => {
                   }}
                 >
                   <div className='title-bar'>
-                    <div className='title-bar-text'>Mint Dadlist</div>
+                    <div className='title-bar-text'>Mint Dadlist - SOLD OUT</div>
                   </div>
                   <div className='window-body'>
                     <p> you have {freeWlCount} TOTAL free mints</p>
@@ -324,7 +324,7 @@ const Home: NextPage = () => {
                         value={amount}
                         readOnly
                       />
-                      <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={mintFree}>
+                      <button disabled={true} data-mint-loading={isMintLoading} onClick={mintFree}>
                         {isMintLoading && "Approving and"}
                         {isMintLoading && "Minting..."}
                         {!isMintLoading && "Mint Dadlist"}
