@@ -79,7 +79,9 @@ const Home: NextPage = () => {
       return toast.error("Please connect your wallet");
     } else if (!chain) {
       return toast.error("You are connected to an unsupported network");
-    } else {
+    } else if (parseInt(totalMinted) + amountPublic > 2000) {
+      return toast.error("Max supply reached");
+    }else {
       const proofPublic = [ethers.utils.formatBytes32String("0")];
       try {
         const contract = ContractInstance(signer as ethers.Signer, chain.id);
@@ -114,7 +116,9 @@ const Home: NextPage = () => {
       return toast.error("Please connect your wallet");
     } else if (!chain) {
       return toast.error("You are connected to an unsupported network");
-    } else {
+    } else if (parseInt(totalMinted) + amountFamily > 2000) {
+      return toast.error("Max supply reached");
+    }else {
       try {
         const contract = ContractInstance(signer as ethers.Signer, chain.id);
         setIsMintLoading(true);
@@ -246,7 +250,7 @@ const Home: NextPage = () => {
               </div>
             </BackCard>
           </FlipCard>
-          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted}/3000 Dads minted.</h3>
+          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted}/2000 Dads minted.</h3>
           <div className='links'>
             <div className='linkRow'>
               <Image src='/etherscan.png' width='20' height='20' alt='etherscan' />
