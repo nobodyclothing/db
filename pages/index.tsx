@@ -11,9 +11,9 @@ import "98.css";
 import FlipCard, { BackCard, FrontCard } from "../components/FlipCard";
 import {
   getErrorMessage,
-  getProofFree,
+  getProofClaim,
   getProofFriends,
-  getValidAmountFree,
+  getValidAmountClaim,
   getValidAmountFriends,
   ContractInstance
 } from "../services/utils";
@@ -24,9 +24,8 @@ const Home: NextPage = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const [freeWlCount, setFreeWlCount] = useState(0);
+  const [claimWlIds, setClaimWlIds] = useState<string[]>([]);
   const [friendsWlCount, setFriendsWlCount] = useState(0);
-  const [amount, setAmount] = useState(1);
   const [amountFamily, setAmountFamily] = useState(1);
   const [amountPublic, setAmountPublic] = useState(1);
   const [isMintLoading, setIsMintLoading] = useState(false);
@@ -44,8 +43,8 @@ const Home: NextPage = () => {
   /**
    * @description The following code defines an async function `mintFree` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
    */
-  const mintFree = async () => {
-    if (freeWlCount === 0) {
+  const claim = async () => {
+    if (claimWlIds.length === 0) {
       return toast.error("You are not on the whitelist");
     } else if (!signer) {
       return toast.error("Please connect your wallet");
@@ -55,8 +54,9 @@ const Home: NextPage = () => {
       const contract = ContractInstance(signer as ethers.Signer, chain.id);
       try {
         setIsMintLoading(true);
-        const proofFree = getProofFree((address as string).toLowerCase(), freeWlCount);
-        const tx = await (await contract.mint(amount, 1, proofFree, freeWlCount)).wait();
+
+        const proofClaim = getProofClaim((address as string).toLowerCase(), claimWlIds);
+        const tx = await (await contract.claim(claimWlIds, address, proofClaim)).wait();
         const receipt = await signer?.provider?.getTransactionReceipt(tx.transactionHash);
         if (receipt?.status === 1) {
           setIsMintSuccess(true);
@@ -64,6 +64,7 @@ const Home: NextPage = () => {
           setRefresh(!refresh);
         }
       } catch (e) {
+        console.log(e)
         toast.error(getErrorMessage(e));
       } finally {
         setIsMintLoading(false);
@@ -159,9 +160,9 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (signer && address) {
-      const wlFree = getValidAmountFree((address as string).toLowerCase());
+      const wlClaim = getValidAmountClaim((address as string).toLowerCase());
       const wlFriends = getValidAmountFriends((address as string).toLowerCase());
-      setFreeWlCount(wlFree);
+      setClaimWlIds(wlClaim);
       setFriendsWlCount(wlFriends);
     }
   }, [signer, address]);
@@ -172,7 +173,7 @@ const Home: NextPage = () => {
         setFriendsPrice("0");
         setPublicPrice("0");
         setTotalMinted("0");
-      } else if (amount > 0 || amountFamily > 0 || amountPublic > 0) {
+      } else if (amountFamily > 0 || amountPublic > 0) {
         const provider = getProvider({
           chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.ETHEREUM
         });
@@ -186,9 +187,9 @@ const Home: NextPage = () => {
         setPublicPrice(ethers.utils.formatEther(publicPrice[1]).toString());
 
         // getting total supply
-        const freeSupply = await contract.freeSupply();
+        const claimSupply = await contract.claimSupply();
         const friendsSupply = await contract.friendsAndPublicSupply();
-        const supply = freeSupply + friendsSupply;
+        const supply = claimSupply + friendsSupply;
         setTotalMinted(supply.toString());
       } else {
         setFriendsPrice("0");
@@ -196,7 +197,7 @@ const Home: NextPage = () => {
         setTotalMinted("0");
       }
     })();
-  }, [signer, address, amount, amountPublic, amountFamily, refresh, chain]);
+  }, [signer, address, amountPublic, amountFamily, refresh, chain]);
 
   return (
     <div className='page'>
@@ -250,7 +251,7 @@ const Home: NextPage = () => {
               </div>
             </BackCard>
           </FlipCard>
-          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted}/2000 Dads minted.</h3>
+          <h3 style={{ margin: "12px 0 24px" }}>{totalMinted}/3000 Dads minted.</h3>
           <div className='links'>
             <div className='linkRow'>
               <Image src='/etherscan.png' width='20' height='20' alt='etherscan' />
@@ -313,25 +314,17 @@ const Home: NextPage = () => {
                   }}
                 >
                   <div className='title-bar'>
-                    <div className='title-bar-text'>Mint Dadlist - SOLD OUT</div>
+                    <div className='title-bar-text'>Free Claims - DadBroV1 minters</div>
                   </div>
                   <div className='window-body'>
-                    <p> you have {freeWlCount} TOTAL free mints</p>
-                    <p style={{ textAlign: "center", padding: "20px" }}>Free mints for Milady, Remilio, Radbro & Schizoposter Holders</p>
-                    <div className='field-row' style={{ justifyContent: "space-between" }}>
-                      <input
-                        style={{ width: "80px" }}
-                        onChange={(val) => setAmount(Number(val.target.value))}
-                        type='number'
-                        max={4}
-                        min={1}
-                        value={amount}
-                        readOnly
-                      />
-                      <button disabled={true} data-mint-loading={isMintLoading} onClick={mintFree}>
+                    <p> you have {claimWlIds.length} Claims</p>
+                    <p style={{ textAlign: "center", padding: "20px" }}>Free Claims for DadBroV1 Minters</p>
+                    <div className='field-row' style={{ justifyContent: "center" }}>
+                    
+                      <button disabled={false} data-mint-loading={isMintLoading} onClick={claim}>
                         {isMintLoading && "Approving and"}
-                        {isMintLoading && "Minting..."}
-                        {!isMintLoading && "Mint Dadlist"}
+                        {isMintLoading && "Claiming..."}
+                        {!isMintLoading && "Claim"}
                       </button>
                     </div>
                   </div>

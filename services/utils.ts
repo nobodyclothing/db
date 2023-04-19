@@ -3,17 +3,17 @@ import keccak256 from "keccak256";
 import { MerkleTree } from "merkletreejs";
 import { Logger } from "ethers/lib/utils";
 import { abi, Addresses } from "./contract-abi";
-import DadBrosFreeWL from "../whitelist/DadBrosFreeWL.json";
+import DadBrosClaimWL from "../whitelist/DadBrosClaimWL.json";
 import DadBrosFriendsWL from "../whitelist/DadBrosFriendsWL.json";
 
 export const ContractInstance = (signer: ethers.Signer | ethers.providers.Provider, chainId: number) => {
   return new ethers.Contract(Addresses[chainId.toString()], abi, signer);
 };
 
-export const getValidAmountFree = (address: string): number => {
-  const res = DadBrosFreeWL.find((holder) => holder.address.toLowerCase() === address);
-  if (res) return res.count;
-  return 0;
+export const getValidAmountClaim = (address: string): string[] => {
+  const res = DadBrosClaimWL.find((holder) => holder.address.toLowerCase() === address);
+  if (res) return res.ids;
+  return [];
 };
 
 export const getValidAmountFriends = (address: string): number => {
@@ -22,13 +22,13 @@ export const getValidAmountFriends = (address: string): number => {
   return 0;
 };
 
-export const getProofFree = (address: string, count: number): string[] => {
-  const leaves = DadBrosFreeWL.map((holder) =>
-    keccak256(ethers.utils.solidityPack(["address", "uint256"], [holder.address, holder.count]))
+export const getProofClaim = (address: string, ids: string[]): string[] => {
+  const leaves = DadBrosClaimWL.map((holder) =>
+    keccak256(ethers.utils.solidityPack(["address", "uint256[]"], [holder.address, holder.ids]))
   );
 
   const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
-  const leaf = keccak256(ethers.utils.solidityPack(["address", "uint256"], [address, count]));
+  const leaf = keccak256(ethers.utils.solidityPack(["address", "uint256[]"], [address, ids]));
   return tree.getHexProof(leaf);
 };
 

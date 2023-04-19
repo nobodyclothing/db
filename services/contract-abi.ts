@@ -2,1964 +2,952 @@ import { SUPPORT_CHAIN_IDS } from "../types/enums";
 
 export const abi = [
   {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string"
-      },
-      {
-        internalType: "string",
-        name: "_symbol",
-        type: "string"
-      },
-      {
-        internalType: "address",
-        name: "_layerZeroEndpoint",
-        type: "address"
-      },
-      {
-        internalType: "string",
-        name: "_baseTokenURI",
-        type: "string"
-      },
-      {
-        internalType: "string",
-        name: "_hiddenURI",
-        type: "string"
-      },
-      {
-        internalType: "uint256",
-        name: "_tax",
-        type: "uint256"
-      },
-      {
-        internalType: "address",
-        name: "_taxRecipient",
-        type: "address"
-      }
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor"
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "operator",
-        type: "address"
-      }
-    ],
-    name: "OperatorNotAllowed",
-    type: "error"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address"
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "approved",
-        type: "address"
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
-      }
-    ],
-    name: "Approval",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address"
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "operator",
-        type: "address"
-      },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "approved",
-        type: "bool"
-      }
-    ],
-    name: "ApprovalForAll",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "_hashedPayload",
-        type: "bytes32"
-      }
-    ],
-    name: "CreditCleared",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "_hashedPayload",
-        type: "bytes32"
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
-      }
-    ],
-    name: "CreditStored",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
-      },
-      {
-        indexed: false,
-        internalType: "uint64",
-        name: "_nonce",
-        type: "uint64"
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
-      },
-      {
-        indexed: false,
-        internalType: "bytes",
-        name: "_reason",
-        type: "bytes"
-      }
-    ],
-    name: "MessageFailed",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address"
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address"
-      }
-    ],
-    name: "OwnershipTransferred",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
-      },
+    "inputs": [
       {
-        indexed: true,
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "_toAddress",
-        type: "address"
+        "internalType": "string",
+        "name": "_symbol",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "uint256[]",
-        name: "_tokenIds",
-        type: "uint256[]"
-      }
-    ],
-    name: "ReceiveFromChain",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
+        "internalType": "string",
+        "name": "_baseTokenURI",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
+        "internalType": "string",
+        "name": "_hiddenURI",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "uint64",
-        name: "_nonce",
-        type: "uint64"
+        "internalType": "uint256",
+        "name": "_tax",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "bytes32",
-        name: "_payloadHash",
-        type: "bytes32"
+        "internalType": "address",
+        "name": "_taxRecipient",
+        "type": "address"
       }
     ],
-    name: "RetryMessageSuccess",
-    type: "event"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "_from",
-        type: "address"
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "bytes",
-        name: "_toAddress",
-        type: "bytes"
+        "indexed": true,
+        "internalType": "address",
+        "name": "approved",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "uint256[]",
-        name: "_tokenIds",
-        type: "uint256[]"
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "SendToChain",
-    type: "event"
+    "name": "Approval",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: false,
-        internalType: "uint16",
-        name: "_type",
-        type: "uint16"
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_minDstGas",
-        type: "uint256"
-      }
-    ],
-    name: "SetMinDstGas",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "precrime",
-        type: "address"
-      }
-    ],
-    name: "SetPrecrime",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
-        indexed: false,
-        internalType: "uint16",
-        name: "_remoteChainId",
-        type: "uint16"
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "bytes",
-        name: "_path",
-        type: "bytes"
+        "indexed": false,
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
       }
     ],
-    name: "SetTrustedRemote",
-    type: "event"
+    "name": "ApprovalForAll",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: false,
-        internalType: "uint16",
-        name: "_remoteChainId",
-        type: "uint16"
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "bytes",
-        name: "_remoteAddress",
-        type: "bytes"
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    name: "SetTrustedRemoteAddress",
-    type: "event"
+    "name": "OwnershipTransferred",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address"
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address"
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
-      }
-    ],
-    name: "Transfer",
-    type: "event"
-  },
-  {
-    inputs: [],
-    name: "DEFAULT_PAYLOAD_SIZE_LIMIT",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "FUNCTION_TYPE_SEND",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_MINT_ID_FREE",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_MINT_ID_FRIENDS",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_MINT_ID_TOTAL",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_TOKENS_PER_MINT_FREE",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_TOKENS_PER_MINT_FRIENDS",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MAX_TOKENS_PER_MINT_PUBLIC",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MIN_FRIENDS_PRICE",
-    outputs: [
-      {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "MIN_PUBLIC_PRICE",
-    outputs: [
-      {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "OPERATOR_FILTER_REGISTRY",
-    outputs: [
       {
-        internalType: "contract IOperatorFilterRegistry",
-        name: "",
-        type: "address"
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "Transfer",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: "PRICE_DECAY_FRIENDS",
-    outputs: [
+    "inputs": [],
+    "name": "MAX_MINT_ID_TOTAL",
+    "outputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "PRICE_DECAY_PUBLIC",
-    outputs: [
+    "inputs": [],
+    "name": "MAX_TOKENS_PER_MINT_FRIENDS",
+    "outputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "PRICE_DELTA_FRIENDS",
-    outputs: [
+    "inputs": [],
+    "name": "MAX_TOKENS_PER_MINT_PUBLIC",
+    "outputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "PRICE_DELTA_PUBLIC",
-    outputs: [
+    "inputs": [],
+    "name": "MIN_FRIENDS_PRICE",
+    "outputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "_saleStarted",
-    outputs: [
+    "inputs": [],
+    "name": "MIN_PUBLIC_PRICE",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "PRICE_DECAY_FRIENDS",
+    "outputs": [
       {
-        internalType: "address",
-        name: "operator",
-        type: "address"
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    name: "approve",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address"
-      }
-    ],
-    name: "balanceOf",
-    outputs: [
+    "inputs": [],
+    "name": "PRICE_DECAY_PUBLIC",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "PRICE_DELTA_FRIENDS",
+    "outputs": [
       {
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    name: "clearCredits",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    name: "dstChainIdToBatchLimit",
-    outputs: [
+    "inputs": [],
+    "name": "PRICE_DELTA_PUBLIC",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    name: "dstChainIdToTransferGas",
-    outputs: [
+    "inputs": [],
+    "name": "_saleStarted",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_toAddress",
-        type: "bytes"
-      },
-      {
-        internalType: "uint256[]",
-        name: "_tokenIds",
-        type: "uint256[]"
-      },
-      {
-        internalType: "bool",
-        name: "_useZro",
-        type: "bool"
-      },
-      {
-        internalType: "bytes",
-        name: "_adapterParams",
-        type: "bytes"
-      }
-    ],
-    name: "estimateSendBatchFee",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "nativeFee",
-        type: "uint256"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "zroFee",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "approve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_toAddress",
-        type: "bytes"
-      },
-      {
-        internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256"
-      },
+    "inputs": [
       {
-        internalType: "bool",
-        name: "_useZro",
-        type: "bool"
-      },
-      {
-        internalType: "bytes",
-        name: "_adapterParams",
-        type: "bytes"
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       }
     ],
-    name: "estimateSendFee",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "nativeFee",
-        type: "uint256"
-      },
+    "name": "balanceOf",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "zroFee",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      },
+    "inputs": [
       {
-        internalType: "bytes",
-        name: "",
-        type: "bytes"
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
       },
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64"
-      }
-    ],
-    name: "failedMessages",
-    outputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "flipRevealed",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "flipSaleStarted",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
-      {
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
-      }
-    ],
-    name: "forceResumeReceive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "freeSupply",
-    outputs: [
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
+        "internalType": "bytes32[]",
+        "name": "_merkleProof",
+        "type": "bytes32[]"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "friendsAndPublicSupply",
-    outputs: [
+    "inputs": [],
+    "name": "claimSupply",
+    "outputs": [
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    name: "getApproved",
-    outputs: [
+    "name": "claimed",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_version",
-        type: "uint16"
-      },
-      {
-        internalType: "uint16",
-        name: "_chainId",
-        type: "uint16"
-      },
-      {
-        internalType: "address",
-        name: "",
-        type: "address"
-      },
-      {
-        internalType: "uint256",
-        name: "_configType",
-        type: "uint256"
-      }
-    ],
-    name: "getConfig",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "",
-        type: "bytes"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
+    "inputs": [],
+    "name": "flipRevealed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "mintType",
-        type: "uint8"
-      },
-      {
-        internalType: "uint16",
-        name: "amount",
-        type: "uint16"
-      }
-    ],
-    name: "getPriceInfo",
-    outputs: [
-      {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
+    "inputs": [],
+    "name": "flipSaleStarted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_remoteChainId",
-        type: "uint16"
-      }
-    ],
-    name: "getTrustedRemoteAddress",
-    outputs: [
+    "inputs": [],
+    "name": "friendsAndPublicSupply",
+    "outputs": [
       {
-        internalType: "bytes",
-        name: "",
-        type: "bytes"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address"
-      },
+    "inputs": [
       {
-        internalType: "address",
-        name: "operator",
-        type: "address"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "isApprovedForAll",
-    outputs: [
+    "name": "getApproved",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
+        "internalType": "uint8",
+        "name": "mintType",
+        "type": "uint8"
       },
-      {
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
-      }
-    ],
-    name: "isTrustedRemote",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "lastUpdateFriends",
-    outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "uint16",
+        "name": "amount",
+        "type": "uint16"
       }
     ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "lastUpdatePublic",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "lzEndpoint",
-    outputs: [
-      {
-        internalType: "contract ILayerZeroEndpoint",
-        name: "",
-        type: "address"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
-      },
+    "name": "getPriceInfo",
+    "outputs": [
       {
-        internalType: "uint64",
-        name: "_nonce",
-        type: "uint64"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       },
-      {
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
-      }
-    ],
-    name: "lzReceive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "merkleRootFree",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "merkleRootFriends",
-    outputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
       }
     ],
-    name: "minDstGasLookup",
-    outputs: [
+    "name": "isApprovedForAll",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "minGasToTransferAndStore",
-    outputs: [
+    "inputs": [],
+    "name": "lastUpdateFriends",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_nbTokens",
-        type: "uint16"
-      },
-      {
-        internalType: "uint8",
-        name: "mintType",
-        type: "uint8"
-      },
-      {
-        internalType: "bytes32[]",
-        name: "_merkleProof",
-        type: "bytes32[]"
-      },
+    "inputs": [],
+    "name": "lastUpdatePublic",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "wlAllocationAmt",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    name: "mint",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8"
-      },
+    "inputs": [],
+    "name": "maxClaimId",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    name: "minted",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "name",
-    outputs: [
+    "inputs": [],
+    "name": "merkleRootClaim",
+    "outputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string"
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "nextMintId",
-    outputs: [
+    "inputs": [],
+    "name": "merkleRootFriends",
+    "outputs": [
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
+        "internalType": "uint16",
+        "name": "_nbTokens",
+        "type": "uint16"
       },
       {
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
+        "internalType": "uint8",
+        "name": "mintType",
+        "type": "uint8"
       },
       {
-        internalType: "uint64",
-        name: "_nonce",
-        type: "uint64"
+        "internalType": "bytes32[]",
+        "name": "_merkleProof",
+        "type": "bytes32[]"
       },
-      {
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
-      }
-    ],
-    name: "nonblockingLzReceive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
-      }
-    ],
-    name: "ownerOf",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    name: "payloadSizeLimitLookup",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
-      }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "precrime",
-    outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
+        "internalType": "uint256",
+        "name": "wlAllocationAmt",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_srcAddress",
-        type: "bytes"
-      },
+    "inputs": [
       {
-        internalType: "uint64",
-        name: "_nonce",
-        type: "uint64"
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
       },
       {
-        internalType: "bytes",
-        name: "_payload",
-        type: "bytes"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    name: "retryMessage",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address"
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address"
-      },
+    "name": "minted",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    name: "safeTransferFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "name",
+    "outputs": [
       {
-        internalType: "address",
-        name: "from",
-        type: "address"
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address"
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
-      },
-      {
-        internalType: "bytes",
-        name: "data",
-        type: "bytes"
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
-    name: "safeTransferFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_from",
-        type: "address"
-      },
-      {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_toAddress",
-        type: "bytes"
-      },
+    "inputs": [],
+    "name": "nextMintId",
+    "outputs": [
       {
-        internalType: "uint256[]",
-        name: "_tokenIds",
-        type: "uint256[]"
-      },
-      {
-        internalType: "address payable",
-        name: "_refundAddress",
-        type: "address"
-      },
-      {
-        internalType: "address",
-        name: "_zroPaymentAddress",
-        type: "address"
-      },
-      {
-        internalType: "bytes",
-        name: "_adapterParams",
-        type: "bytes"
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
       }
     ],
-    name: "sendBatchFrom",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_from",
-        type: "address"
-      },
-      {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_toAddress",
-        type: "bytes"
-      },
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256"
-      },
-      {
-        internalType: "address payable",
-        name: "_refundAddress",
-        type: "address"
-      },
-      {
-        internalType: "address",
-        name: "_zroPaymentAddress",
-        type: "address"
-      },
-      {
-        internalType: "bytes",
-        name: "_adapterParams",
-        type: "bytes"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    name: "sendFrom",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "operator",
-        type: "address"
-      },
-      {
-        internalType: "bool",
-        name: "approved",
-        type: "bool"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "setApprovalForAll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
+    "name": "ownerOf",
+    "outputs": [
       {
-        internalType: "string",
-        name: "uri",
-        type: "string"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    name: "setBaseURI",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "address payable",
-        name: "_beneficiary",
-        type: "address"
-      }
-    ],
-    name: "setBeneficiary",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "revealed",
+    "outputs": [
       {
-        internalType: "uint16",
-        name: "_version",
-        type: "uint16"
-      },
-      {
-        internalType: "uint16",
-        name: "_chainId",
-        type: "uint16"
-      },
-      {
-        internalType: "uint256",
-        name: "_configType",
-        type: "uint256"
-      },
-      {
-        internalType: "bytes",
-        name: "_config",
-        type: "bytes"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    name: "setConfig",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       },
       {
-        internalType: "uint256",
-        name: "_dstChainIdToBatchLimit",
-        type: "uint256"
-      }
-    ],
-    name: "setDstChainIdToBatchLimit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
-      {
-        internalType: "uint256",
-        name: "_dstChainIdToTransferGas",
-        type: "uint256"
-      }
-    ],
-    name: "setDstChainIdToTransferGas",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
       {
-        internalType: "string",
-        name: "_hiddenMetadataUri",
-        type: "string"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "setHiddenMetadataUri",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes32",
-        name: "tier",
-        type: "bytes32"
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       },
-      {
-        internalType: "bytes32",
-        name: "_merkleRoot",
-        type: "bytes32"
-      }
-    ],
-    name: "setMerkleRoot",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
       {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
       {
-        internalType: "uint16",
-        name: "_packetType",
-        type: "uint16"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       },
-      {
-        internalType: "uint256",
-        name: "_minGas",
-        type: "uint256"
-      }
-    ],
-    name: "setMinDstGas",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
       {
-        internalType: "uint256",
-        name: "_minGasToTransferAndStore",
-        type: "uint256"
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
       }
     ],
-    name: "setMinGasToTransferAndStore",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_dstChainId",
-        type: "uint16"
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
       },
-      {
-        internalType: "uint256",
-        name: "_size",
-        type: "uint256"
-      }
-    ],
-    name: "setPayloadSizeLimit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
       {
-        internalType: "address",
-        name: "_precrime",
-        type: "address"
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
       }
     ],
-    name: "setPrecrime",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_version",
-        type: "uint16"
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
       }
     ],
-    name: "setReceiveVersion",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setBaseURI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_version",
-        type: "uint16"
+        "internalType": "address payable",
+        "name": "_beneficiary",
+        "type": "address"
       }
     ],
-    name: "setSendVersion",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setBeneficiary",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "_tax",
-        type: "uint256"
+        "internalType": "string",
+        "name": "_hiddenMetadataUri",
+        "type": "string"
       }
     ],
-    name: "setTax",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setHiddenMetadataUri",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address payable",
-        name: "_taxRecipient",
-        type: "address"
+        "internalType": "uint16",
+        "name": "_maxClaimId",
+        "type": "uint16"
       }
     ],
-    name: "setTaxRecipient",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setMaxClaimId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_srcChainId",
-        type: "uint16"
+        "internalType": "bytes32",
+        "name": "tier",
+        "type": "bytes32"
       },
       {
-        internalType: "bytes",
-        name: "_path",
-        type: "bytes"
+        "internalType": "bytes32",
+        "name": "_merkleRoot",
+        "type": "bytes32"
       }
     ],
-    name: "setTrustedRemote",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setMerkleRoot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint16",
-        name: "_remoteChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "bytes",
-        name: "_remoteAddress",
-        type: "bytes"
+        "internalType": "uint256",
+        "name": "_tax",
+        "type": "uint256"
       }
     ],
-    name: "setTrustedRemoteAddress",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "setTax",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "spotPriceFriends",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "address payable",
+        "name": "_taxRecipient",
+        "type": "address"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "setTaxRecipient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "spotPricePublic",
-    outputs: [
+    "inputs": [],
+    "name": "spotPriceFriends",
+    "outputs": [
       {
-        internalType: "uint128",
-        name: "",
-        type: "uint128"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
-      }
-    ],
-    name: "storedCredits",
-    outputs: [
-      {
-        internalType: "uint16",
-        name: "srcChainId",
-        type: "uint16"
-      },
-      {
-        internalType: "address",
-        name: "toAddress",
-        type: "address"
-      },
+    "inputs": [],
+    "name": "spotPricePublic",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256"
-      },
-      {
-        internalType: "bool",
-        name: "creditsRemain",
-        type: "bool"
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "bytes4",
-        name: "interfaceId",
-        type: "bytes4"
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
       }
     ],
-    name: "supportsInterface",
-    outputs: [
+    "name": "supportsInterface",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "symbol",
-    outputs: [
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string"
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "tax",
-    outputs: [
+    "inputs": [],
+    "name": "tax",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "tokenURI",
-    outputs: [
+    "name": "tokenURI",
+    "outputs": [
       {
-        internalType: "string",
-        name: "",
-        type: "string"
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "from",
-        type: "address"
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "to",
-        type: "address"
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256"
-      }
-    ],
-    name: "transferFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       }
     ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "name": "transferFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: "uint16",
-        name: "",
-        type: "uint16"
-      }
-    ],
-    name: "trustedRemoteLookup",
-    outputs: [
+    "inputs": [
       {
-        internalType: "bytes",
-        name: "",
-        type: "bytes"
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    stateMutability: "view",
-    type: "function"
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ] as const;
 
 export const Addresses: { [key: string]: string } = {
   [SUPPORT_CHAIN_IDS.ETHEREUM]: "0x78F3C6c28b6D70982f98678F5e09c3731c963152",
-  [SUPPORT_CHAIN_IDS.GOERLI_TESTNET]: "0xa719b36BE0D83aE5B5D63FD219Db912e91F435D0"
+  [SUPPORT_CHAIN_IDS.GOERLI_TESTNET]: "0xA3a73a77DD52BF32F2C15418496E580814681450"
 };
