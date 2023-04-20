@@ -173,7 +173,7 @@ const Home: NextPage = () => {
         setFriendsPrice("0");
         setPublicPrice("0");
         setTotalMinted("0");
-      } else if (amountFamily > 0 || amountPublic > 0) {
+      } else if ((amountFamily > 0 || amountPublic > 0) && signer) {
         const provider = getProvider({
           chainId: chain ? chain.id : SUPPORT_CHAIN_IDS.ETHEREUM
         });
