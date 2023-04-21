@@ -30,6 +30,7 @@ const Home: NextPage = () => {
   const [amountPublic, setAmountPublic] = useState(1);
   const [isMintLoading, setIsMintLoading] = useState(false);
   const [isMintSuccess, setIsMintSuccess] = useState(false);
+  const [slippage, setSlippage] = useState(0)
   const [hash, setHash] = useState("");
   const [publicPrice, setPublicPrice] = useState("");
   const [friendsPrice, setFriendsPrice] = useState("");
@@ -71,6 +72,8 @@ const Home: NextPage = () => {
       }
     }
   };
+
+
 
   /**
    * @description The following code defines an async function `mintFriends` that mints a certain amount of tokens on the DADBROS contract instance. If the user is on the whitelist and a signer is connected, the function calculates a proof and calls the `mint` function on the contract, passing in the amount, the proof, and the number of friends' addresses on the whitelist.
@@ -144,6 +147,8 @@ const Home: NextPage = () => {
     }
   };
 
+  
+
   useEffect(() => {
     // Define a function that updates the data
 
@@ -184,7 +189,9 @@ const Home: NextPage = () => {
 
         // getting public price
         const publicPrice = await contract.getPriceInfo(3, amountPublic);
-        setPublicPrice(ethers.utils.formatEther(publicPrice[1]).toString());
+        const ethPrice = ethers.utils.formatEther(publicPrice[1].toString());
+        const slippagePrice = Number(ethPrice) * (1 + slippage/100);
+        setPublicPrice(slippagePrice.toString());
 
         // getting total supply
         const claimSupply = await contract.claimSupply();
@@ -197,7 +204,7 @@ const Home: NextPage = () => {
         setTotalMinted("0");
       }
     })();
-  }, [signer, address, amountPublic, amountFamily, refresh, chain]);
+  }, [signer, address, amountPublic, amountFamily, refresh, chain, slippage]);
 
   return (
     <div className='page'>
@@ -382,6 +389,7 @@ const Home: NextPage = () => {
                   <div className='window-body'>
                     <p style={{ textAlign: "center", padding: "20px" }}>Buy in bulk to get the best deal.</p>
                     <div className='field-row' style={{ justifyContent: "space-between" }}>
+                      
                       <input
                         style={{ width: "80px" }}
                         value={amountPublic}
@@ -390,6 +398,19 @@ const Home: NextPage = () => {
                         min={1}
                         type='number'
                       />
+                      <div style={{ display: "flex", gap: "2px", alignItems: "center"}}>
+                      <input
+                  
+                        type="number"
+                        value={slippage}
+                        min="0"
+                        max="5"
+                        step="1"
+                        onChange={(e) => setSlippage(Number(e.target.value))}
+                      />
+                     
+                      <span>%</span>
+                    </div>
                       <p> Price: {publicPrice.slice(0, 7)}</p>
                       <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={purchasePublic}>
                         {isMintLoading && "Approving and "}
