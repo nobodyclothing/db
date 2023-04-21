@@ -90,9 +90,12 @@ const Home: NextPage = () => {
       try {
         const contract = ContractInstance(signer as ethers.Signer, chain.id);
         setIsMintLoading(true);
+        const publicPrice = await contract.getPriceInfo(3, amountPublic);
+        const ethPrice = ethers.utils.formatEther(publicPrice[1].toString());
+        const slippagePrice = Number(ethPrice) * (1 + slippage/100);
         const tx = await (
           await contract.mint(amountPublic, 3, proofPublic, 0, {
-            value: ethers.utils.parseEther(publicPrice)
+            value: ethers.utils.parseEther(slippagePrice.toString())
           })
         ).wait();
         setIsMintLoading(false);
@@ -204,7 +207,7 @@ const Home: NextPage = () => {
         setTotalMinted("0");
       }
     })();
-  }, [signer, address, amountPublic, amountFamily, refresh, chain, slippage]);
+  }, [signer, address, amountPublic, amountFamily, refresh, chain, slippage, isMintSuccess]);
 
   return (
     <div className='page'>
