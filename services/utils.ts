@@ -16,9 +16,12 @@ export const getValidAmountClaim = (address: string): string[] => {
   return [];
 };
 
-export const getValidAmountFriends = (address: string): number => {
+export const getValidAmountFriends = async (address: string, contract: ethers.Contract): Promise<number> => {
   const res = DadBrosFriendsWL.find((holder) => holder.address.toLowerCase() === address);
-  if (res) return res.count;
+  if (res) {
+    const minted = await contract.minted(2, address)
+    return res.count - Number(minted);
+  }
   return 0;
 };
 

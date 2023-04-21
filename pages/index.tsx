@@ -129,9 +129,9 @@ const Home: NextPage = () => {
       try {
         const contract = ContractInstance(signer as ethers.Signer, chain.id);
         setIsMintLoading(true);
-        const proofFriends = getProofFriends((address as string).toLowerCase(), friendsWlCount);
+        const proofFriends = getProofFriends((address as string).toLowerCase(), 10);
         const tx = await (
-          await contract.mint(amountFamily, 2, proofFriends, friendsWlCount, {
+          await contract.mint(amountFamily, 2, proofFriends, 10, {
             value: ethers.utils.parseEther(friendsPrice)
           })
         ).wait();
@@ -167,13 +167,15 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (signer && address) {
+    if (signer && address && chain) {
       const wlClaim = getValidAmountClaim((address as string).toLowerCase());
-      const wlFriends = getValidAmountFriends((address as string).toLowerCase());
+      getValidAmountFriends((address as string).toLowerCase(), ContractInstance(signer as ethers.Signer, chain.id)).then((res) => { 
+        setFriendsWlCount(res);
+      });
       setClaimWlIds(wlClaim);
-      setFriendsWlCount(wlFriends);
+  
     }
-  }, [signer, address]);
+  }, [signer, address, chain, isMintSuccess, refresh]);
 
   useEffect(() => {
     (async () => {
