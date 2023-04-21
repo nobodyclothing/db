@@ -150,7 +150,7 @@ const Home: NextPage = () => {
     }
   };
 
-  
+
 
   useEffect(() => {
     // Define a function that updates the data
@@ -169,11 +169,11 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (signer && address && chain) {
       const wlClaim = getValidAmountClaim((address as string).toLowerCase());
-      getValidAmountFriends((address as string).toLowerCase(), ContractInstance(signer as ethers.Signer, chain.id)).then((res) => { 
+      getValidAmountFriends((address as string).toLowerCase(), ContractInstance(signer as ethers.Signer, chain.id)).then((res) => {
         setFriendsWlCount(res);
       });
       setClaimWlIds(wlClaim);
-  
+
     }
   }, [signer, address, chain, isMintSuccess, refresh]);
 
@@ -329,8 +329,8 @@ const Home: NextPage = () => {
                     <div className='title-bar-text'>Convert Your Dads to v2</div>
                   </div>
                   <div className='window-body'>
-                    <p> you have {claimWlIds.length} v2 Dads to Claim</p>
-                    <p style={{ textAlign: "center", padding: "20px" }}>Click Claim to receive v2 versions of your minted v1 Dads.</p>
+                    <p> You have {claimWlIds.length} v2 Dads to Claim.</p>
+                    <p style={{ textAlign: "center", padding: "20px" }}>Click <b>Claim</b> to receive v2 versions of your minted v1 Dads.</p>
                     <div className='field-row' style={{ justifyContent: "center" }}>
 
                       <button disabled={false} data-mint-loading={isMintLoading} onClick={claim}>
@@ -355,10 +355,10 @@ const Home: NextPage = () => {
                     <div className='title-bar-text'>Mint Family</div>
                   </div>
                   <div className='window-body'>
-                    <p> you have {friendsWlCount} TOTAL family mints</p>
+                    <p> You have {friendsWlCount} TOTAL family mints.</p>
 
                     <p style={{ textAlign: "center", padding: "20px" }}>
-                      Discounted mints for friends. when you&apos;re here, you&apos;re Family.
+                      Discounted mints for friends. When you&apos;re here, you&apos;re Family. Price is a flat .01, take your time.
                     </p>
                     <div className='field-row' style={{ justifyContent: "space-between" }}>
                       <input
@@ -392,9 +392,9 @@ const Home: NextPage = () => {
                     <div className='title-bar-text'>Mint Public</div>
                   </div>
                   <div className='window-body'>
-                    <p style={{ textAlign: "center", padding: "20px" }}>Buy in bulk to get the best deal.</p>
+                    <p style={{ textAlign: "center", padding: "20px" }}>Buy in bulk to get the best deal. Price is dynamic so use <b>Slippage</b> if mint volume is high, we recommend 5%.</p>
                     <div className='field-row' style={{ justifyContent: "space-between" }}>
-                      
+
                       <input
                         style={{ width: "80px" }}
                         value={amountPublic}
@@ -404,8 +404,9 @@ const Home: NextPage = () => {
                         type='number'
                       />
                       <div style={{ display: "flex", gap: "2px", alignItems: "center"}}>
+                      <span>Slippage: </span>
                       <input
-                  
+
                         type="number"
                         value={slippage}
                         min="0"
@@ -413,7 +414,7 @@ const Home: NextPage = () => {
                         step="1"
                         onChange={(e) => setSlippage(Number(e.target.value))}
                       />
-                     
+
                       <span>%</span>
                     </div>
                       <p> Price: {publicPrice.slice(0, 7)}</p>
