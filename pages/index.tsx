@@ -314,15 +314,15 @@ const Home: NextPage = () => {
                   }}
                 >
                   <div className='title-bar'>
-                    <div className='title-bar-text'>Free Claims - DadBroV1 minters</div>
+                    <div className='title-bar-text'>Convert Your Dads to v2</div>
                   </div>
                   <div className='window-body'>
-                    <p> you have {claimWlIds.length} Claims</p>
-                    <p style={{ textAlign: "center", padding: "20px" }}>Free Claims for DadBroV1 Minters</p>
+                    <p> you have {claimWlIds.length} v2 Dads to Claim</p>
+                    <p style={{ textAlign: "center", padding: "20px" }}>Click Claim to receive v2 versions of your minted v1 Dads.</p>
                     <div className='field-row' style={{ justifyContent: "center" }}>
-                    
+
                       <button disabled={false} data-mint-loading={isMintLoading} onClick={claim}>
-                        {isMintLoading && "Approving and"}
+                        {isMintLoading && "Approving and "}
                         {isMintLoading && "Claiming..."}
                         {!isMintLoading && "Claim"}
                       </button>
@@ -359,7 +359,7 @@ const Home: NextPage = () => {
                       />
                       <p> Price: {friendsPrice.slice(0, 7)}</p>
                       <button disabled={isMintLoading} data-mint-loading={isMintLoading} onClick={purchaseFriends}>
-                        {isMintLoading && "Approving and"}
+                        {isMintLoading && "Approving and "}
                         {isMintLoading && "Minting..."}
                         {!isMintLoading && "Mint Family"}
                       </button>
