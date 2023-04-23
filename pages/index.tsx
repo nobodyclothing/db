@@ -168,11 +168,13 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (signer && address && chain) {
-      const wlClaim = getValidAmountClaim((address as string).toLowerCase());
+      getValidAmountClaim((address as string).toLowerCase(), ContractInstance(signer as ethers.Signer, chain.id)).then((res) => {
+        setClaimWlIds(res)
+      });
       getValidAmountFriends((address as string).toLowerCase(), ContractInstance(signer as ethers.Signer, chain.id)).then((res) => {
         setFriendsWlCount(res);
       });
-      setClaimWlIds(wlClaim);
+  
 
     }
   }, [signer, address, chain, isMintSuccess, refresh]);
