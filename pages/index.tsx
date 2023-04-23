@@ -365,7 +365,7 @@ const Home: NextPage = () => {
                         style={{ width: "80px" }}
                         value={amountFamily}
                         onChange={(val) => setAmountFamily(Number(val.target.value))}
-                        max={5}
+                        max={10}
                         min={1}
                         type='number'
                       />
