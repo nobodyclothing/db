@@ -267,14 +267,14 @@ const Home: NextPage = () => {
           <div className='links'>
             <div className='linkRow'>
               <Image src='/etherscan.png' width='20' height='20' alt='etherscan' />
-              <a target='_blank' href='https://etherscan.io/address/0x78F3C6c28b6D70982f98678F5e09c3731c963152' rel='noopener noreferrer'>
+              <a target='_blank' href='https://etherscan.io/address/0x06d0874B8F84e62a6943d6f800b8691ec0cD4FA9' rel='noopener noreferrer'>
                 <h4 style={{ paddingLeft: "10px" }}>Etherscan</h4>
               </a>
             </div>
 
             <div className='linkRow'>
               <Image src='/opensea.png' width='20' height='20' alt='opensea' />
-              <a target='_blank' href='https://opensea.io/collection/dadbros' rel='noopener noreferrer'>
+              <a target='_blank' href='https://opensea.io/collection/dadbrosv2' rel='noopener noreferrer'>
                 <h4 style={{ paddingLeft: "10px" }}>Opensea</h4>
               </a>
             </div>
