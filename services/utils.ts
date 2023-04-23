@@ -10,9 +10,15 @@ export const ContractInstance = (signer: ethers.Signer | ethers.providers.Provid
   return new ethers.Contract(Addresses[chainId.toString()], abi, signer);
 };
 
-export const getValidAmountClaim = (address: string): string[] => {
+export const getValidAmountClaim = async (address: string, contract: ethers.Contract): Promise<string[]> => {
   const res = DadBrosClaimWL.find((holder) => holder.address.toLowerCase() === address);
-  if (res) return res.ids;
+  if (res) {
+    const claimed = await contract.claimed(address)
+    if (claimed) {
+      return []
+    }
+    return res.ids
+  }
   return [];
 };
 
