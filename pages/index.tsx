@@ -333,7 +333,7 @@ const Home: NextPage = () => {
                   </div>
                   <div className='window-body'>
                     <p> You have {claimWlIds.length} v2 Dads to Claim.</p>
-                    <p style={{ textAlign: "center", padding: "20px" }}>Click <b>Claim</b> to receive v2 versions of your minted v1 Dads.</p>
+                    <p style={{ textAlign: "center", padding: "20px" }}>Click <b>Claim</b> to receive v2 versions of your minted v1 Dads. Your v1 Dads are now <b>First Editions</b>.</p>
                     <div className='field-row' style={{ justifyContent: "center" }}>
 
                       <button disabled={false} data-mint-loading={isMintLoading} onClick={claim}>
